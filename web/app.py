@@ -1,16 +1,4 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
-from config import BaseConfig
+from portal import app
 
-app = Flask(__name__)
-app.config.from_object(BaseConfig)
-db = SQLAlchemy(app)
-
-migrate = Migrate(app, db)
-
-from views import *
-
-if __name__ == '__main__':
-    app.run()
-
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')

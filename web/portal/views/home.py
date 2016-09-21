@@ -1,8 +1,8 @@
 from flask import render_template, request
 
-from app import app, db
+from portal import app, db
 
-from models import *
+from portal.models import *
 
 @app.route('/', methods=['GET', 'POST'])
 def index():

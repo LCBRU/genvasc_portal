@@ -4,19 +4,22 @@ services:
   web:
     restart: always
     build: ./web
+    depends_on:
+      - mysql
     expose:
       - "8000"
     links:
-      - postgres:postgres
+      - mysql:mysql
     volumes:
-      - ./web:/usr/src/app
-      - /usr/src/app/static
+      - /usr/src/app/portal/static
     env_file: .env
     command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
 
   nginx:
     restart: always
     build: ./nginx/
+    depends_on:
+      - web
     ports:
       - "8000:80"
     volumes:
@@ -24,13 +27,13 @@ services:
     volumes_from:
       - web
     links:
+      - mysql:mysql
       - web:web
 
-  postgres:
+  mysql:
     restart: always
-    image: postgres:latest
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
+    image: mysql:latest
+    env_file: .env
+    expose:
+      - "3306"
 

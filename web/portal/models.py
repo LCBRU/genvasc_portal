@@ -1,5 +1,5 @@
 import datetime
-from app import db
+from portal import db
 
 class Practice(db.Model):
 

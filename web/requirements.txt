@@ -6,5 +6,4 @@ SQLAlchemy
 Werkzeug
 gunicorn
 itsdangerous
-psycopg2
-flask-migrate
+mysqlclient
