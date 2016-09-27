@@ -1,0 +1,6 @@
+# Add Environment Variables
+
+MYSQL_DATABASE=civicrm
+MYSQL_USER=civiuser
+MYSQL_PASSWORD=civipass
+MYSQL_RANDOM_ROOT_PASSWORD=yes

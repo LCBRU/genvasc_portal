@@ -1,6 +1,15 @@
 version: '2'
 
 services:
+  etl:
+    restart: always
+    build: ./etl
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+      - civicrmdb:civicrmdb
+
   web:
     restart: always
     build: ./web
@@ -21,7 +30,7 @@ services:
     depends_on:
       - web
     ports:
-      - "8000:80"
+      - "80:80"
     volumes:
       - /www/static
     volumes_from:
@@ -37,3 +46,11 @@ services:
     expose:
       - "3306"
 
+  civicrmdb:
+    restart: always
+    image: mysql:latest
+    env_file: .civicrmdb_env
+    volumes:
+      - ./civicrm_seed:/docker-entrypoint-initdb.d
+    expose:
+      - "3306"
