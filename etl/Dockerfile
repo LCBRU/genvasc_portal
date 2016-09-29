@@ -4,11 +4,11 @@ MAINTAINER Richard bramley <rabramley@gmail.com>
 
 RUN apt-get update && \
     apt-get -y upgrade && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install cron mysql-client && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install cron mysql-client gettext && \
     apt-get clean
 
-ADD cron_scripts /cron_scripts
+ADD scripts /scripts
 
-RUN { crontab -l ; echo "* * * * * /cron_scripts/etl_practiceDetails.sh"; } | crontab -
+RUN { crontab -l ; echo "* * * * * /scripts/etl_practice_details.sh >> /cron.log 2>&1"; } | crontab -
 
-CMD cron -f
+CMD ["/scripts/startup.sh"]
