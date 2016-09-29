@@ -7,6 +7,8 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get -y install cron mysql-client && \
     apt-get clean
 
-RUN echo "* * * * * mysqldump -h civicrmdb -u civiuser -pcivipass civicrm PracticeDetails | mysql -h mysql -u gpuser -pgppass gp" | crontab -
+ADD cron_scripts /cron_scripts
+
+RUN { crontab -l ; echo "* * * * * /cron_scripts/etl_practiceDetails.sh"; } | crontab -
 
 CMD cron -f
