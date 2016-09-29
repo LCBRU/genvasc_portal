@@ -1,0 +1,23 @@
+# Environment Variables
+#
+# Environment variables are named after their primary
+# container, but may be used in other containers as well.
+# Here is how the names are made up:
+#
+# {primary_container_name}_{variable_name}
+#
+# To set before running the containers,
+# run the following command in the terminal '. .env'
+
+export WEB_DEBUG=False
+export WEB_SECRET_KEY="rD3!Z9jkj8kD"
+
+export MYSQL_MYSQL_DATABASE=gp
+export MYSQL_MYSQL_USER=gpuser
+export MYSQL_MYSQL_PASSWORD=gppass
+export MYSQL_MYSQL_RANDOM_ROOT_PASSWORD=yes
+
+export CIVICRMDB_MYSQL_DATABASE=civicrm
+export CIVICRMDB_MYSQL_USER=civiuser
+export CIVICRMDB_MYSQL_PASSWORD=civipass
+export CIVICRMDB_MYSQL_RANDOM_ROOT_PASSWORD=yes

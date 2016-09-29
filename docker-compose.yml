@@ -9,6 +9,13 @@ services:
     links:
       - mysql:mysql
       - civicrmdb:civicrmdb
+    environment:
+      PORTAL_MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
+      PORTAL_MYSQL_USER: ${MYSQL_MYSQL_USER}
+      PORTAL_MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
+      CIVICRM_MYSQL_DATABASE: ${CIVICRMDB_MYSQL_DATABASE}
+      CIVICRM_MYSQL_USER: ${CIVICRMDB_MYSQL_USER}
+      CIVICRM_MYSQL_PASSWORD: ${CIVICRMDB_MYSQL_PASSWORD}
 
   web:
     restart: always
@@ -21,7 +28,12 @@ services:
       - mysql:mysql
     volumes:
       - /usr/src/app/portal/static
-    env_file: .env
+    environment:
+      DEBUG: ${WEB_DEBUG}
+      SECRET_KEY: ${WEB_SECRET_KEY}
+      MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
     command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
 
   nginx:
@@ -36,20 +48,27 @@ services:
     volumes_from:
       - web
     links:
-      - mysql:mysql
       - web:web
 
   mysql:
     restart: always
     image: mysql:latest
-    env_file: .env
+    environment:
+      MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_MYSQL_RANDOM_ROOT_PASSWORD}
     expose:
       - "3306"
 
   civicrmdb:
     restart: always
     image: mysql:latest
-    env_file: .civicrmdb_env
+    environment:
+      MYSQL_DATABASE: ${CIVICRMDB_MYSQL_DATABASE}
+      MYSQL_USER: ${CIVICRMDB_MYSQL_USER}
+      MYSQL_PASSWORD: ${CIVICRMDB_MYSQL_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: ${CIVICRMDB_MYSQL_RANDOM_ROOT_PASSWORD}
     volumes:
       - ./civicrm_seed:/docker-entrypoint-initdb.d
     expose:
