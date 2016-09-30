@@ -1,12 +1,10 @@
-CREATE TABLE etl_practice_details (
-        id INTEGER PRIMARY KEY
-    ,   name VARCHAR(500) NOT NULL
+CREATE TABLE practice_registration (
+        id INTEGER PRIMARY KEY AUTO_INCREMENT
     ,   code VARCHAR(50) NOT NULL
-	,   status VARCHAR(500)
-	,	is_deleted BOOL
+    ,   date_created DATETIME NOT NULL
     )
 ;
 
-CREATE UNIQUE INDEX idx_etl_practice_details_code
-ON etl_practice_details (code)
+CREATE UNIQUE INDEX idx_practice_registration_code
+ON practice_registration (code)
 ;

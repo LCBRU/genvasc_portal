@@ -8,7 +8,6 @@
       <input type="text" class="form-control" placeholder="Search practices...">
       <span class="input-group-btn">
         <button class="btn btn-default" type="button">Search</button>
-        <a class="btn btn-primary" href="{{ url_for('practices_add_list') }}">Add New</a>
       </span>
     </div>
   </div>
@@ -27,7 +26,7 @@
         </div>
       </div>
       <div class="col-xs-10">
-        <h1>({{p.code}}) {{p.name}}</h1>
+        <h1>{{p.name}}</h1>
       </div>
     </div>
   {% endfor %}
