@@ -1,23 +1,26 @@
 {% extends "_base.html" %}
+{% import "_formHelpers.html" as formhelper %}
 
 {% block content %}
 
 <div class="page-header">
   <div class="col-lg-6 pull-right">
     <div class="input-group pull-right">
-      <input type="text" class="form-control" placeholder="Search practices...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Search</button>
-        <a class="btn btn-primary" href="{{ url_for('practices_add_list') }}">Add New</a>
-      </span>
+      <div class="input-group">
+        <form method="GET" class="form-horizontal" action="{{ url_for('practices_index') }}">
+            {{ searchForm.search() | safe }}
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a class="btn btn-primary" href="{{ url_for('practices_add_list') }}">Add New</a>
+        </form>
+      </div>
     </div>
   </div>
 
-  <h1>Practices</h1>
+  <h1>Registered Practices</h1>
 </div>
 
 <div class="list-group">
-  {% for p in practices %}
+  {% for r in registrations.items %}
     <div class="list-group-item row">
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
@@ -27,10 +30,13 @@
         </div>
       </div>
       <div class="col-xs-10">
-        <h1>({{p.code}}) {{p.name}}</h1>
+        <h4>{{r.practice.name}}</h4>
+        <p>{{r.practice.ccg_name}}</p>
       </div>
     </div>
   {% endfor %}
 </div>
+
+{{ formhelper.render_pagination(registrations, 'practices_index', search=searchForm.search.data) }}
 
 {% endblock %}
