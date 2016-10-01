@@ -25,3 +25,4 @@ export CIVICRMDB_MYSQL_RANDOM_ROOT_PASSWORD=yes
 export ETL_TAB_GP_CUSTOM="civicrm_value_gp_surgery_data_3"
 export ETL_COL_GP_CODE="practice_code_7"
 export ETL_COL_GP_STATUS="practice_status_11"
+export ETL_ID_CCG_RELATIONSHIP_TYPE=31

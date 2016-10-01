@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from portal import app, db
 from portal.models import *
 from portal.forms import *
@@ -12,7 +12,8 @@ def practices_index():
 @app.route("/practices/add/list/<int:page>")
 def practices_add_list(page=1):
     searchString = request.args.get('search')
-    form = SearchForm(search=searchString)
+    searchForm = SearchForm(search=searchString)
+    selectForm = PracticeRegisterForm()
 
     q = Practice.query
 
@@ -26,14 +27,21 @@ def practices_add_list(page=1):
             per_page=10,
             error_out=False))
 
-    return render_template('practices/add_list.html', practices=practices, form=form)
+    return render_template('practices/add_list.html', practices=practices, searchForm=searchForm, selectForm=selectForm)
 
 @app.route('/practices/add/select', methods=['POST'])
 def practices_add():
-    name = request.form['name']
-    code = request.form['code']
-    practice = Practice(name, code)
-    db.session.add(practice)
-    db.session.commit()
+    form = PracticeRegisterForm()
 
-    return redirect(url_for('practices_index'))
+    if form.validate_on_submit():
+
+        practice = Practice.query.get(form.code.data)
+
+        registration = PracticeRegistration(code=practice.code)
+
+        db.session.add(registration)
+        db.session.commit()
+
+        flash("Practice '%s' registered." % practice.name)
+
+    return redirect(url_for('practices_add_list'))

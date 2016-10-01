@@ -5,14 +5,12 @@ class Practice(db.Model):
 
     __tablename__ = 'etl_practice_details'
 
+    id = db.Column(db.Integer)
     code = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
     status = db.Column(db.String, nullable=False)
     is_deleted = db.Column(db.Boolean, nullable=False)
-
-    def __init__(self, name, code):
-        self.name = name
-        self.code = code
+    ccg_name = db.Column(db.String, nullable=False)
 
 class PracticeRegistration(db.Model):
 

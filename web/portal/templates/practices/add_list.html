@@ -4,33 +4,47 @@
 {% block content %}
 
 <div class="page-header">
-  <div class="col-lg-6 pull-right">
-    <div class="input-group pull-right">
-      <form method="GET" class="form-horizontal" action="{{ url_for('practices_add_list') }}">
-          {{ form.search() | safe }}
-          <button type="submit" class="btn btn-primary">Search</button>
-      </form>
+  <div class="row vertical-center">
+    <div class="col-xs-12 col-sm-6 col-md-8">
+      <h1 class="pull-left">Available Practices</h1>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4">
+      <div class="input-group">
+        <form method="GET" class="form-horizontal" action="{{ url_for('practices_add_list') }}">
+            {{ searchForm.search() | safe }}
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
     </div>
   </div>
-
-  <h1>Available Practices</h1>
 </div>
 
 <div class="list-group">
+  <form method="POST" class="form-horizontal" action="{{ url_for('practices_add') }}">
+    {{ selectForm.csrf_token }}
+    <input type="hidden" name="code" value="blurge">
+    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"><span class="hidden-xs"> Register Nonsense</span></button>
+  </form>
+
   {% for p in practices.items %}
-    <div class="list-group-item row">
+    <div class="list-group-item row vertical-center">
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
-          <button type="button" class="btn btn-primary">Register</button>
+          <form method="POST" class="form-horizontal" action="{{ url_for('practices_add') }}">
+            {{ selectForm.csrf_token }}
+            <input type="hidden" name="code" value="{{p.code}}">
+            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"><span class="hidden-xs"> Register</span></button>
+          </form>
         </div>
       </div>
       <div class="col-xs-10">
-        <p>{{p.name}}</p>
+        <h4>{{p.name}}</h4>
+        <p>{{p.ccg_name}}</p>
       </div>
     </div>
   {% endfor %}
 </div>
 
-{{ formhelper.render_pagination(practices, 'practices_add_list', search=form.search.data) }}
+{{ formhelper.render_pagination(practices, 'practices_add_list', search=searchForm.search.data) }}
 
 {% endblock %}

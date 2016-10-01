@@ -1,11 +1,13 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from portal.config import BaseConfig
+from flask_wtf.csrf import CsrfProtect
 import logging
 import traceback
 
 app = Flask(__name__)
 app.config.from_object(BaseConfig)
+CsrfProtect(app)
 
 if not app.debug:
     import logging
