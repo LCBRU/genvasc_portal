@@ -1,35 +1,36 @@
 {% extends "_base.html" %}
+{% import "_formHelpers.html" as formhelper %}
 
 {% block content %}
 
 <div class="page-header">
   <div class="col-lg-6 pull-right">
     <div class="input-group pull-right">
-      <input type="text" class="form-control" placeholder="Search practices...">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Search</button>
-      </span>
+      <form method="GET" class="form-horizontal" action="{{ url_for('practices_add_list') }}">
+          {{ form.search() | safe }}
+          <button type="submit" class="btn btn-primary">Search</button>
+      </form>
     </div>
   </div>
 
-  <h1>Practices</h1>
+  <h1>Available Practices</h1>
 </div>
 
 <div class="list-group">
-  {% for p in practices %}
+  {% for p in practices.items %}
     <div class="list-group-item row">
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-left glyphicon-heart-empty" aria-hidden="true"> Recruits</button>
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-left glyphicon-gbp" aria-hidden="true"> Invoices</button>
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-align-left glyphicon-user" aria-hidden="true"> Personnel</button>
+          <button type="button" class="btn btn-primary">Register</button>
         </div>
       </div>
       <div class="col-xs-10">
-        <h1>{{p.name}}</h1>
+        <p>{{p.name}}</p>
       </div>
     </div>
   {% endfor %}
 </div>
+
+{{ formhelper.render_pagination(practices, 'practices_add_list', search=form.search.data) }}
 
 {% endblock %}
