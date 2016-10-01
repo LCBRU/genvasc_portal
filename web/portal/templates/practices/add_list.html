@@ -20,12 +20,6 @@
 </div>
 
 <div class="list-group">
-  <form method="POST" class="form-horizontal" action="{{ url_for('practices_add') }}">
-    {{ selectForm.csrf_token }}
-    <input type="hidden" name="code" value="blurge">
-    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"><span class="hidden-xs"> Register Nonsense</span></button>
-  </form>
-
   {% for p in practices.items %}
     <div class="list-group-item row vertical-center">
       <div class="col-xs-2">
