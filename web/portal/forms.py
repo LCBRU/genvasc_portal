@@ -42,6 +42,7 @@ class FlashingForm(FlaskForm):
 
 class SearchForm(FlashingForm):
     search = StringField('Search', validators=[Length(max=20)])
+    page = IntegerField('Page', default=1)
 
 class SelectForm(FlashingForm):
     id = HiddenField('id')

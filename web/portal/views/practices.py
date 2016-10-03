@@ -4,8 +4,7 @@ from portal.models import *
 from portal.forms import *
 
 @app.route('/practices/')
-@app.route('/practices/page:<int:page>')
-def practices_index(page=1):
+def practices_index():
     searchForm = SearchForm(formdata = request.args)
 
     q = PracticeRegistration.query.join(Practice, PracticeRegistration.practice)
@@ -16,15 +15,14 @@ def practices_index(page=1):
     registrations = (
         q.order_by(Practice.name.asc())
          .paginate(
-            page=page,
+            page=searchForm.page.data,
             per_page=10,
             error_out=False))
 
     return render_template('practices/index.html', registrations=registrations, searchForm=searchForm)
 
 @app.route('/practices/add/list/')
-@app.route("/practices/add/list/page:<int:page>")
-def practices_add_list(page=1):
+def practices_add_list():
     searchForm = SearchForm(formdata = request.args)
     selectForm = PracticeRegisterForm()
 
@@ -37,7 +35,7 @@ def practices_add_list(page=1):
     practices = (
         q.order_by(Practice.name.asc())
          .paginate(
-            page=page,
+            page=searchForm.page.data,
             per_page=10,
             error_out=False))
 
