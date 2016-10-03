@@ -15,9 +15,9 @@ class Practice(db.Model):
 class PracticeRegistration(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String, db.ForeignKey('etl_practice_details.code'))
+    code = db.Column(db.String, db.ForeignKey(Practice.code))
     date_created = db.Column(db.DateTime, nullable=False)
-    practice = db.relationship("Practice")
+    practice = db.relationship(Practice)
 
     def __init__(self, code):
         self.code = code
@@ -26,11 +26,11 @@ class PracticeRegistration(db.Model):
 class StaffMember(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    practice_registration_id = db.Column(db.Integer, db.ForeignKey('practice_registration.id'))
+    practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False)
-    practice_registration = db.relationship("PracticeRegistration", backref=db.backref('staff', cascade="all, delete-orphan"))
+    practice_registration = db.relationship(PracticeRegistration, backref=db.backref('staff', cascade="all, delete-orphan"))
 
     def __init__(self, *args, **kwargs):
         self.practice_registration_id = kwargs.get('practice_registration').id
