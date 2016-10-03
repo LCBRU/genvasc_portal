@@ -23,3 +23,18 @@ class PracticeRegistration(db.Model):
         self.code = code
         self.date_created = datetime.datetime.now()
 
+class StaffMember(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    practice_registration_id = db.Column(db.Integer, db.ForeignKey('practice_registration.id'))
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False)
+    practice_registration = db.relationship("PracticeRegistration", backref=db.backref('staff', cascade="all, delete-orphan"))
+
+    def __init__(self, *args, **kwargs):
+        self.practice_registration_id = kwargs.get('practice_registration').id
+        self.first_name = kwargs.get('first_name')
+        self.last_name = kwargs.get('last_name')
+        self.date_created = datetime.datetime.now()
+
