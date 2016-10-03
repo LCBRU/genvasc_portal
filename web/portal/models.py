@@ -38,3 +38,6 @@ class StaffMember(db.Model):
         self.last_name = kwargs.get('last_name')
         self.date_created = datetime.datetime.now()
 
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+

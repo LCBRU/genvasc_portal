@@ -8,7 +8,7 @@
 <form method="POST" class="form-horizontal">
     {{ form.hidden_tag() }}
 
-    <h4>Are you sure that you want to delete {{ staff_member.first_name }} {{ staff_member.last_name }} as a staff member for {{ practice_registration.practice.name }}</h4>
+    <h4>Are you sure that you want to delete {{ staff_member.full_name() }} as a staff member for {{ practice_registration.practice.name }}</h4>
 
     <div class="text-right">
         <a href="{{ url_for('staff_index', code=practice_registration.code) }}" class="btn btn-default" role="button">Cancel</a>

@@ -84,6 +84,6 @@ def staff_delete_confirm(code, id):
         if (staff_member):
             db.session.delete(staff_member)
             db.session.commit()
-            flash("Deleted staff member '%s'." % staff_member.first_name)
+            flash("Deleted staff member {}.".format(staff_member.full_name()))
             
     return redirect(url_for('staff_index', code=code))
