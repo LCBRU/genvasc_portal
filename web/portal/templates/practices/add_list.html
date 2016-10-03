@@ -9,12 +9,15 @@
       <h1 class="pull-left">Available Practices</h1>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4">
-      <div class="input-group">
-        <form method="GET" class="form-horizontal" action="{{ url_for('practices_add_list') }}">
-            {{ searchForm.search() | safe }}
+      <form method="GET" class="form-horizontal" action="{{ url_for('practices_add_list') }}">
+        <div class="input-group">
+          {{ searchForm.search(class="form-control") | safe }}
+          <span class="input-group-btn">
             <button type="submit" class="btn btn-primary">Search</button>
-        </form>
-      </div>
+            <a class="btn btn-primary" href="{{ url_for('practices_index') }}">Cancel</a>
+          </span>
+        </div>
+      </form>
     </div>
   </div>
 </div>

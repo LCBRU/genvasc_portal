@@ -4,18 +4,20 @@
 {% block content %}
 
 <div class="page-header">
-  <div class="row vertical-center">
+  <div class="row">
     <div class="col-xs-12 col-sm-6 col-md-8">
-      <h1 class="pull-left">Registered Practices</h1>
+      <h1>Registered Practices</h1>
     </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
-      <div class="input-group">
-        <form method="GET" class="form-horizontal" action="{{ url_for('practices_index') }}">
-            {{ searchForm.search() | safe }}
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a class="btn btn-primary" href="{{ url_for('practices_add_list') }}">Add New</a>
-        </form>
-      </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 bottom-align-text">
+      <form method="GET" class="form-horizontal" action="{{ url_for('practices_index') }}">
+        <div class="input-group">
+            {{ searchForm.search(class="form-control") | safe }}
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-primary">Search</button>
+              <a class="btn btn-primary" href="{{ url_for('practices_add_list') }}">Add New</a>
+            </span>
+        </div>
+      </form>
     </div>
   </div>
 </div>
