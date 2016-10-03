@@ -52,3 +52,18 @@ class PracticeRegisterForm(FlashingForm):
     	Exists(Practice, Practice.code, "Practice does not exist."),
     	NotExists(PracticeRegistration, PracticeRegistration.code, "Practice is already registered.")
     	])
+
+class StaffMemberForm(WtfForm):
+    first_name = StringField('First Name', validators=[DataRequired(), Length(max=100)])
+    last_name = StringField('Last Name', validators=[DataRequired(), Length(max=100)])
+
+
+class StaffMemberEditForm(FlashingForm):
+    id = HiddenField('id')
+    staff_member = FormField(StaffMemberForm)
+
+class StaffMemberNewForm(FlashingForm):
+    code = HiddenField('code', validators=[
+        Exists(PracticeRegistration, PracticeRegistration.code, "Practice is not registered.")
+        ])
+    staff_member = FormField(StaffMemberForm)

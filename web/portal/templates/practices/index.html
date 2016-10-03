@@ -4,22 +4,8 @@
 {% block content %}
 
 <div class="page-header">
-  <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-8">
-      <h1>Registered Practices</h1>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4 bottom-align-text">
-      <form method="GET" class="form-horizontal" action="{{ url_for('practices_index') }}">
-        <div class="input-group">
-            {{ searchForm.search(class="form-control") | safe }}
-            <span class="input-group-btn">
-              <button type="submit" class="btn btn-primary">Search</button>
-              <a class="btn btn-primary" href="{{ url_for('practices_add_list') }}">Add New</a>
-            </span>
-        </div>
-      </form>
-    </div>
-  </div>
+  <h1>Registered Practices</h1>
+  {{ formhelper.render_search(searchForm, 'practices_index', {'Add New' : 'practices_add_list'}) }}
 </div>
 
 <div class="list-group">
@@ -27,9 +13,9 @@
     <div class="list-group-item row">
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</button>
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-gbp" aria-hidden="true"> Invoices</button>
-          <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</button>
+          <a class="btn btn-default"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
+          <a class="btn btn-default"><span class="glyphicon glyphicon-gbp" aria-hidden="true"> Invoices</a>
+          <a class="btn btn-default" href="{{ url_for('staff_index', code=r.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</a>
         </div>
       </div>
       <div class="col-xs-10">

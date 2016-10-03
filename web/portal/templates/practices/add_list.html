@@ -4,22 +4,8 @@
 {% block content %}
 
 <div class="page-header">
-  <div class="row vertical-center">
-    <div class="col-xs-12 col-sm-6 col-md-8">
-      <h1 class="pull-left">Available Practices</h1>
-    </div>
-    <div class="col-xs-12 col-sm-6 col-md-4">
-      <form method="GET" class="form-horizontal" action="{{ url_for('practices_add_list') }}">
-        <div class="input-group">
-          {{ formhelper.render_naked_field_control(searchForm.search) }}
-          <span class="input-group-btn">
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a class="btn btn-primary" href="{{ url_for('practices_index') }}">Done</a>
-          </span>
-        </div>
-      </form>
-    </div>
-  </div>
+  <h1>Available Practices</h1>
+  {{ formhelper.render_search(searchForm, 'practices_add_list', {'Done': 'practices_index'}) }}
 </div>
 
 <div class="list-group">
