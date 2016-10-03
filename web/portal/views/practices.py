@@ -4,15 +4,14 @@ from portal.models import *
 from portal.forms import *
 
 @app.route('/practices/')
-@app.route('/practices/<int:page>')
+@app.route('/practices/page:<int:page>')
 def practices_index(page=1):
-    searchString = request.args.get('search')
-    searchForm = SearchForm(search=searchString)
+    searchForm = SearchForm(formdata = request.args)
 
     q = PracticeRegistration.query.join(Practice, PracticeRegistration.practice)
 
-    if searchString:
-        q = q.filter(Practice.name.like("%{0}%".format(searchString)))
+    if searchForm.search.data:
+        q = q.filter(Practice.name.like("%{0}%".format(searchForm.search.data)))
 
     registrations = (
         q.order_by(Practice.name.asc())
@@ -24,17 +23,16 @@ def practices_index(page=1):
     return render_template('practices/index.html', registrations=registrations, searchForm=searchForm)
 
 @app.route('/practices/add/list/')
-@app.route("/practices/add/list/<int:page>")
+@app.route("/practices/add/list/page:<int:page>")
 def practices_add_list(page=1):
-    searchString = request.args.get('search')
-    searchForm = SearchForm(search=searchString)
+    searchForm = SearchForm(formdata = request.args)
     selectForm = PracticeRegisterForm()
 
     q = Practice.query.filter(
         ~Practice.code.in_(db.session.query(PracticeRegistration.code)))
 
-    if searchString:
-        q = q.filter(Practice.name.like("%{0}%".format(searchString)))
+    if searchForm.search.data:
+        q = q.filter(Practice.name.like("%{0}%".format(searchForm.search.data)))
 
     practices = (
         q.order_by(Practice.name.asc())
