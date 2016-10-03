@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from sqlalchemy import func
 from portal import app, db
 from portal.models import *
 from portal.forms import *
@@ -12,7 +13,7 @@ def staff_index(code):
     q = StaffMember.query.join(PracticeRegistration, StaffMember.practice_registration).filter(PracticeRegistration.code == code)
 
     if searchForm.search.data:
-        q = q.filter(StaffMember.first_name.like("%{0}%".format(searchForm.search.data)))
+        q = q.filter(func.concat(StaffMember.first_name, ' ', StaffMember.last_name).like("%{}%".format(searchForm.search.data)))
 
     staff = (
         q.order_by(StaffMember.last_name.asc(), StaffMember.first_name.asc())
