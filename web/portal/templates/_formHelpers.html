@@ -29,6 +29,10 @@
     </div>
 {% endmacro %}
 
+{% macro render_naked_field_control(field) %}
+    {{ field(class="form-control", **kwargs)|safe }}
+{% endmacro %}
+
 {% macro render_errors(field) %}
   {% if field.errors %}
     <div class="alert alert-danger">
