@@ -47,6 +47,9 @@ class SearchForm(FlashingForm):
 class SelectForm(FlashingForm):
     id = HiddenField('id')
 
+class DeleteForm(FlashingForm):
+    id = HiddenField('id')
+
 class PracticeRegisterForm(FlashingForm):
     code = HiddenField('code', validators=[
     	Exists(Practice, Practice.code, "Practice does not exist."),

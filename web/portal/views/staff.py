@@ -45,4 +45,45 @@ def staff_add(code):
 
     form = StaffMemberNewForm(code = code)
 
-    return render_template('practices/staff/add.html', form=form, practice_registration=practice_registration)
+    return render_template('practices/staff/edit.html', form=form, practice_registration=practice_registration)
+
+@app.route('/practices/<string:code>/staff/<int:id>/edit', methods=['GET','POST'])
+def staff_edit(code, id):
+    practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
+    staff_member = StaffMember.query.get(id)
+
+    form = StaffMemberEditForm()
+
+    if form.validate_on_submit():
+
+        staff_member.first_name = form.staff_member.first_name.data
+        staff_member.last_name = form.staff_member.last_name.data
+
+        db.session.commit()
+
+        return redirect(url_for('staff_index', code=code))
+
+    form = StaffMemberNewForm(id=id, staff_member=staff_member)
+
+    return render_template('practices/staff/edit.html', form=form, practice_registration=practice_registration)
+
+@app.route('/practices/<string:code>/staff/<int:id>/delete')
+def staff_delete(code, id):
+    practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
+    staff_member = StaffMember.query.get(id)
+    form = DeleteForm(obj=staff_member)
+    return render_template('practices/staff/delete.html', form=form, staff_member=staff_member, practice_registration=practice_registration)
+
+@app.route('/practices/<string:code>/staff/<int:id>/delete', methods=['POST'])
+def staff_delete_confirm(code, id):
+    form = DeleteForm()
+
+    if form.validate_on_submit():
+        staff_member = StaffMember.query.get(form.id.data)
+
+        if (staff_member):
+            db.session.delete(staff_member)
+            db.session.commit()
+            flash("Deleted staff member '%s'." % staff_member.first_name)
+            
+    return redirect(url_for('staff_index', code=code))

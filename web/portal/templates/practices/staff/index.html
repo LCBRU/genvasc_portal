@@ -12,6 +12,10 @@
   {% for s in staff.items %}
     <div class="list-group-item row">
       <div class="col-xs-2">
+        <div class="btn-group-vertical" role="group" aria-label="...">
+          <a class="btn btn-default" href="{{ url_for('staff_edit', code=practice_registration.code, id=s.id) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Edit</a>
+          <a class="btn btn-default" href="{{ url_for('staff_delete', code=practice_registration.code, id=s.id) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Delete</a>
+        </div>
       </div>
       <div class="col-xs-10">
         <h4>{{s.first_name}} {{s.last_name}}</h4>
