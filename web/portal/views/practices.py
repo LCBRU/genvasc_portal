@@ -24,7 +24,6 @@ def practices_index():
 @app.route('/practices/add/list/')
 def practices_add_list():
     searchForm = SearchForm(formdata = request.args)
-    selectForm = PracticeRegisterForm()
 
     q = Practice.query.filter(
         ~Practice.code.in_(db.session.query(PracticeRegistration.code)))
@@ -39,21 +38,27 @@ def practices_add_list():
             per_page=10,
             error_out=False))
 
-    return render_template('practices/add_list.html', practices=practices, searchForm=searchForm, selectForm=selectForm)
+    return render_template('practices/add_list.html', practices=practices, searchForm=searchForm)
 
-@app.route('/practices/add/select', methods=['POST'])
-def practices_add():
-    form = PracticeRegisterForm()
+@app.route('/practices/add/<string:code>', methods=['GET','POST'])
+def practices_add(code):
+    form = PracticeAddForm()
 
     if form.validate_on_submit():
 
-        practice = Practice.query.get(form.code.data)
+        pr = PracticeRegistration(
+            code=form.code.data,
+            date_initiated=form.date_initiated.data,
+            notes=form.notes.data
+            )
 
-        registration = PracticeRegistration(code=practice.code)
-
-        db.session.add(registration)
+        db.session.add(pr)
         db.session.commit()
 
-        flash("Practice '%s' registered." % practice.name)
+        return redirect(url_for('practices_add_list'))
 
-    return redirect(url_for('practices_add_list'))
+    practice = Practice.query.filter(Practice.code == code).first()
+    form = PracticeAddForm(code=code)
+
+    return render_template('practices/edit.html', form=form, practice=practice)
+

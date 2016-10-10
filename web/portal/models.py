@@ -18,9 +18,13 @@ class PracticeRegistration(db.Model):
     code = db.Column(db.String, db.ForeignKey(Practice.code))
     date_created = db.Column(db.DateTime, nullable=False)
     practice = db.relationship(Practice)
+    date_initiated = db.Column(db.DateTime, nullable=True)
+    notes = db.Column(db.String)
 
-    def __init__(self, code):
-        self.code = code
+    def __init__(self, *args, **kwargs):
+        self.code = kwargs.get('code')
+        self.date_initiated = kwargs.get('date_initiated')
+        self.notes = kwargs.get('notes')
         self.date_created = datetime.datetime.now()
 
 class StaffMember(db.Model):

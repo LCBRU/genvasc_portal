@@ -1,30 +1,61 @@
 {% macro render_field(field) %}
   <div class="form-group{% if field.errors %} has-error{%endif%}">
     {% if field.type == "BooleanField" %}
-        {{ field.label(class="col-sm-5 control-label") }}{{ render_checkbox_field_control(field, **kwargs) }}
+        {{ field.label(class="col-sm-6 control-label") }}{{ render_checkbox_field_control(field, **kwargs) }}
     {% elif field.type == "FileField" %}
-        {{ field.label(class="col-sm-5 control-label") }}{{ render_file_field_control(field, **kwargs) }}
+        {{ field.label(class="col-sm-6 control-label") }}{{ render_file_field_control(field, **kwargs) }}
     {% else %}
-        {{ field.label(class="col-sm-5 control-label") }}{{ render_field_control(field, **kwargs) }}
+        {{ field.label(class="col-sm-6 control-label") }}{{ render_field_control(field, **kwargs) }}
     {% endif %}
   </div>
   {{ render_errors(field)}}
 {% endmacro %}
 
 {% macro render_checkbox_field_control(field) %}
-    <div class="col-sm-7">
+    <div class="col-sm-6">
         {{ field(class="checkbox", **kwargs)|safe }}
     </div>
 {% endmacro %}
 
 {% macro render_field_control(field) %}
-    <div class="col-sm-7">
+    <div class="col-sm-6">
         {{ field(class="form-control", **kwargs)|safe }}
     </div>
 {% endmacro %}
 
 {% macro render_file_field_control(field) %}
-    <div class="col-sm-7">
+    <div class="col-sm-6">
+        {{ field(**kwargs)|safe }}
+    </div>
+{% endmacro %}
+
+{% macro render_field_short_label(field) %}
+  <div class="form-group{% if field.errors %} has-error{%endif%}">
+    {% if field.type == "BooleanField" %}
+        {{ field.label(class="col-sm-3 control-label") }}{{ render_checkbox_field_control_short_label(field, **kwargs) }}
+    {% elif field.type == "FileField" %}
+        {{ field.label(class="col-sm-3 control-label") }}{{ render_file_field_control_short_label(field, **kwargs) }}
+    {% else %}
+        {{ field.label(class="col-sm-3 control-label") }}{{ render_field_control_short_label(field, **kwargs) }}
+    {% endif %}
+  </div>
+  {{ render_errors(field)}}
+{% endmacro %}
+
+{% macro render_checkbox_field_control_short_label(field) %}
+    <div class="col-sm-9">
+        {{ field(class="checkbox", **kwargs)|safe }}
+    </div>
+{% endmacro %}
+
+{% macro render_field_control_short_label(field) %}
+    <div class="col-sm-9">
+        {{ field(class="form-control", **kwargs)|safe }}
+    </div>
+{% endmacro %}
+
+{% macro render_file_field_control_short_label(field) %}
+    <div class="col-sm-9">
         {{ field(**kwargs)|safe }}
     </div>
 {% endmacro %}

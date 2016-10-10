@@ -13,11 +13,7 @@
     <div class="list-group-item row vertical-center">
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
-          <form method="POST" class="form-horizontal" action="{{ url_for('practices_add') }}">
-            {{ selectForm.csrf_token }}
-            <input type="hidden" name="code" value="{{p.code}}">
-            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"><span class="hidden-xs"> Register</span></button>
-          </form>
+          <a class="btn btn-primary" href="{{ url_for('practices_add', code=p.code) }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"><span class="hidden-xs"> Register</span></a>
         </div>
       </div>
       <div class="col-xs-10">

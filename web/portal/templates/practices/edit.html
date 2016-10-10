@@ -1,0 +1,24 @@
+{% extends "_base.html" %}
+{% import "_formHelpers.html" as formhelper %}
+
+{% block content %}
+
+<h2>Practice Registration</h2>
+
+<form method="POST" class="form-horizontal">
+    {{ form.hidden_tag() }}
+
+    <div class="col-sm-12">
+        {{ formhelper.render_field_short_label(form.date_initiated) }}
+    </div>
+    <div class="col-sm-12">
+        {{ formhelper.render_field_short_label(form.notes) }}
+    </div>
+
+    <div class="col-sm-12 text-right">
+        <a href="{{ url_for('practices_add_list') }}" class="btn btn-default" role="button">Cancel</a>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+</form>
+
+{% endblock %}
