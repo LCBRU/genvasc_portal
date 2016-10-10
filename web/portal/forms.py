@@ -57,6 +57,14 @@ class PracticeAddForm(FlashingForm):
     date_initiated = DateField('Date Initiated')
     notes = TextAreaField('Notes')    
 
+class PracticeEditForm(FlashingForm):
+    code = HiddenField('code', validators=[
+        Exists(Practice, Practice.code, "Practice does not exist."),
+        Exists(PracticeRegistration, PracticeRegistration.code, "Practice is not registered.")
+        ])
+    date_initiated = DateField('Date Initiated')
+    notes = TextAreaField('Notes')    
+
 class StaffMemberForm(WtfForm):
     first_name = StringField('First Name', validators=[DataRequired(), Length(max=100)])
     last_name = StringField('Last Name', validators=[DataRequired(), Length(max=100)])

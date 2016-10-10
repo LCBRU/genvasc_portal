@@ -60,5 +60,43 @@ def practices_add(code):
     practice = Practice.query.filter(Practice.code == code).first()
     form = PracticeAddForm(code=code)
 
-    return render_template('practices/edit.html', form=form, practice=practice)
+    return render_template('practices/edit.html', form=form, practice=practice, cancel_link='practices_add_list')
 
+@app.route('/practices/edit/<string:code>', methods=['GET','POST'])
+def practices_edit(code):
+    form = PracticeEditForm()
+
+    pr = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
+
+    if form.validate_on_submit():
+        pr.date_initiated=form.date_initiated.data
+        pr.notes=form.notes.data
+        db.session.commit()
+
+        return redirect(url_for('practices_index'))
+
+    practice = Practice.query.filter(Practice.code == code).first()
+    form = PracticeEditForm(obj=pr)
+
+    return render_template('practices/edit.html', form=form, practice=practice, cancel_link='practices_index')
+
+@app.route('/practices/delete/<string:code>')
+def practices_delete(code):
+    practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
+    form = DeleteForm(obj=practice_registration)
+    return render_template('practices/delete.html', form=form, practice_registration=practice_registration)
+
+@app.route('/practices/delete/<string:code>', methods=['POST'])
+def practices_delete_confirm(code):
+    form = DeleteForm()
+
+    if form.validate_on_submit():
+        pr = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
+        practice = Practice.query.filter(Practice.code == code).first()
+
+        if (pr):
+            db.session.delete(pr)
+            db.session.commit()
+            flash("Deleted practice regsitration for {}.".format(practice.name))
+            
+    return redirect(url_for('practices_index'))
