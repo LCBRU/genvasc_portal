@@ -12,16 +12,27 @@ class Practice(db.Model):
     is_deleted = db.Column(db.Boolean, nullable=False)
     ccg_name = db.Column(db.String, nullable=False)
 
+class User(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        self.username = kwargs.get('username')
+
 class PracticeRegistration(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    user = db.relationship(User, backref=db.backref('registrations', cascade="all, delete-orphan"))
     code = db.Column(db.String, db.ForeignKey(Practice.code))
     date_created = db.Column(db.DateTime, nullable=False)
     practice = db.relationship(Practice)
-    date_initiated = db.Column(db.DateTime, nullable=True)
+    date_initiated = db.Column(db.Date, nullable=True)
     notes = db.Column(db.String)
 
     def __init__(self, *args, **kwargs):
+        self.user_id = kwargs.get('user').id
         self.code = kwargs.get('code')
         self.date_initiated = kwargs.get('date_initiated')
         self.notes = kwargs.get('notes')
@@ -44,4 +55,24 @@ class StaffMember(db.Model):
 
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+class Recruit(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
+    practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    user = db.relationship(User, backref=db.backref('recruits', cascade="all, delete-orphan"))
+    nhs_number = db.Column(db.String(20), nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=True)
+    date_recruited = db.Column(db.Date, nullable=True)
+    date_created = db.Column(db.DateTime, nullable=True)
+
+    def __init__(self, *args, **kwargs):
+        self.practice_registration_id = kwargs.get('practice_registration').id
+        self.user_id = kwargs.get('user').id
+        self.nhs_number = kwargs.get('nhs_number')
+        self.date_of_birth = kwargs.get('date_of_birth')
+        self.date_recruited = kwargs.get('date_recruited')
+        self.date_created = datetime.datetime.now()
 

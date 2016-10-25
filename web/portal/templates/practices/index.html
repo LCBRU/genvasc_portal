@@ -19,11 +19,16 @@
       </div>
       <div class="col-xs-8">
         <h4>{{r.practice.name}}</h4>
-        <p>{{r.practice.ccg_name}}</p>
+        <dl class="inline">
+            <dt>CCG</dt>
+            <dd>{{ r.practice.ccg_name }}</dd>
+            <dt>Registered By</dt>
+            <dd>{{ r.user.username }}</dd>
+        </dl>
       </div>
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
-          <a class="btn btn-default"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
+          <a class="btn btn-default" href="{{ url_for('recruits_index', code=r.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
           <a class="btn btn-default"><span class="glyphicon glyphicon-gbp" aria-hidden="true"> Invoices</a>
           <a class="btn btn-default" href="{{ url_for('staff_index', code=r.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</a>
         </div>

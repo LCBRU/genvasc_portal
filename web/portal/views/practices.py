@@ -47,6 +47,7 @@ def practices_add(code):
     if form.validate_on_submit():
 
         pr = PracticeRegistration(
+            user=current_user(),
             code=form.code.data,
             date_initiated=form.date_initiated.data,
             notes=form.notes.data
@@ -100,3 +101,6 @@ def practices_delete_confirm(code):
             flash("Deleted practice regsitration for {}.".format(practice.name))
             
     return redirect(url_for('practices_index'))
+
+def current_user():
+    return User.query.filter(User.username == 'richard').first()

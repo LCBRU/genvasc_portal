@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+{% import "_formHelpers.html" as formhelper %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>Recruits for {{ practice_registration.practice.name }}</h1>
+  {{ formhelper.render_search(searchForm, 'recruits_index', { 'Add New' : 'recruits_add'}, code=practice_registration.code) }}
+</div>
+
+<div class="list-group">
+  {% for r in recruits.items %}
+    <div class="list-group-item row">
+      <div class="col-xs-2">
+        <div class="btn-group-vertical" role="group" aria-label="...">
+          <a class="btn btn-primary" href="{{ url_for('recruits_edit', code=practice_registration.code, id=r.id) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Edit</a>
+        </div>
+      </div>
+      <div class="col-xs-10">
+        <h4>{{ r.nhs_number }}</h4>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{{ formhelper.render_pagination(recruits, 'recruits_index', search=searchForm.search.data, code=practice_registration.code) }}
+
+{% endblock %}
