@@ -7,6 +7,10 @@ from flask import request, render_template, flash, redirect, url_for
 def datetime_format(value):
     return value.strftime('%c')
 
+@app.template_filter('date_format')
+def date_format(value):
+    return value.strftime('%-d %b %Y')
+
 def templated(template=None):
     def decorator(f):
         @wraps(f)

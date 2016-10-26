@@ -125,7 +125,7 @@ class PracticeAddForm(FlashingForm):
         Exists(Practice, Practice.code, "Practice does not exist"),
         NotExists(PracticeRegistration, PracticeRegistration.code, "Practice is already registered")
         ])
-    date_initiated = DateField('Date Initiated', format='%d/%m/%Y')
+    date_initiated = DateField('Date Initiated', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%d/%m/%Y')
     notes = TextAreaField('Notes')    
 
 class PracticeEditForm(FlashingForm):
@@ -133,7 +133,7 @@ class PracticeEditForm(FlashingForm):
         Exists(Practice, Practice.code, "Practice does not exist"),
         Exists(PracticeRegistration, PracticeRegistration.code, "Practice is not registered")
         ])
-    date_initiated = DateField('Date Initiated', format='%d/%m/%Y')
+    date_initiated = DateField('Date Initiated', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%d/%m/%Y')
     notes = TextAreaField('Notes')    
 
 class StaffMemberForm(WtfForm):
@@ -158,8 +158,8 @@ class RecruitNewForm(FlashingForm):
         Exists(PracticeRegistration, PracticeRegistration.code, "Practice is not registered")
         ])
     nhs_number = StringField('NHS Number', validators=[DataRequired(), Length(max=20), ValidNhsNumber()])
-    date_of_birth = DateField('Date of Birth', format='%d/%m/%Y')
-    date_recruited = DateField('Date Recruited', format='%d/%m/%Y')
+    date_of_birth = DateField('Date of Birth', validators=[DataRequired(), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)], format='%d/%m/%Y')
+    date_recruited = DateField('Date Recruited', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%d/%m/%Y')
 
 class RecruitEditForm(FlashingForm):
     id = HiddenField('id', validators=[
