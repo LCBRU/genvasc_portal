@@ -3,8 +3,10 @@ from sqlalchemy import func
 from portal import app, db
 from portal.models import *
 from portal.forms import *
+from portal.helpers import *
 
 @app.route('/practices/<string:code>/staff')
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 def staff_index(code):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
 
@@ -25,6 +27,7 @@ def staff_index(code):
     return render_template('practices/staff/index.html', staff=staff, practice_registration=practice_registration, searchForm=searchForm)
 
 @app.route('/practices/<string:code>/staff/add', methods=['GET','POST'])
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 def staff_add(code):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
 
@@ -49,6 +52,8 @@ def staff_add(code):
     return render_template('practices/staff/edit.html', form=form, practice_registration=practice_registration)
 
 @app.route('/practices/<string:code>/staff/<int:id>/edit', methods=['GET','POST'])
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
+@must_exist(model=StaffMember, field=StaffMember.id, request_field='id', error_redirect='practices_index', message="Staff member does not exist")
 def staff_edit(code, id):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
     staff_member = StaffMember.query.get(id)
@@ -64,11 +69,13 @@ def staff_edit(code, id):
 
         return redirect(url_for('staff_index', code=code))
 
-    form = StaffMemberNewForm(id=id, staff_member=staff_member)
+    form = StaffMemberEditForm(id=id, staff_member=staff_member)
 
     return render_template('practices/staff/edit.html', form=form, practice_registration=practice_registration)
 
 @app.route('/practices/<string:code>/staff/<int:id>/delete')
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
+@must_exist(model=StaffMember, field=StaffMember.id, request_field='id', error_redirect='practices_index', message="Staff member does not exist")
 def staff_delete(code, id):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
     staff_member = StaffMember.query.get(id)
@@ -76,6 +83,7 @@ def staff_delete(code, id):
     return render_template('practices/staff/delete.html', form=form, staff_member=staff_member, practice_registration=practice_registration)
 
 @app.route('/practices/<string:code>/staff/<int:id>/delete', methods=['POST'])
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 def staff_delete_confirm(code, id):
     form = DeleteForm()
 

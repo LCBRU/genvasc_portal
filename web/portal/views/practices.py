@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, flash
 from portal import app, db
 from portal.models import *
 from portal.forms import *
+from portal.helpers import *
 
 @app.route('/practices/')
 def practices_index():
@@ -41,6 +42,7 @@ def practices_add_list():
     return render_template('practices/add_list.html', practices=practices, searchForm=searchForm)
 
 @app.route('/practices/add/<string:code>', methods=['GET','POST'])
+@must_exist(model=Practice, field=Practice.code, request_field='code', error_redirect='practices_add_list', message="Practice does not exist")
 def practices_add(code):
     form = PracticeAddForm()
 
@@ -64,6 +66,7 @@ def practices_add(code):
     return render_template('practices/edit.html', form=form, practice=practice, cancel_link='practices_add_list')
 
 @app.route('/practices/edit/<string:code>', methods=['GET','POST'])
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 def practices_edit(code):
     form = PracticeEditForm()
 
@@ -82,6 +85,7 @@ def practices_edit(code):
     return render_template('practices/edit.html', form=form, practice=practice, cancel_link='practices_index')
 
 @app.route('/practices/delete/<string:code>')
+@must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 def practices_delete(code):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
     form = DeleteForm(obj=practice_registration)
