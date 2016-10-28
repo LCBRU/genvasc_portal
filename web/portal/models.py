@@ -56,6 +56,15 @@ class StaffMember(db.Model):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
+class DapsSubmission(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    date_submitted = db.Column(db.DateTime, nullable=False)
+    date_returned = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        self.date_submitted = datetime.datetime.now()
+
 class Recruit(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -63,10 +72,12 @@ class Recruit(db.Model):
     practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     user = db.relationship(User, backref=db.backref('recruits', cascade="all, delete-orphan"))
+    daps_submission_id = db.Column(db.Integer, db.ForeignKey(DapsSubmission.id))
+    daps_submission = db.relationship(DapsSubmission, backref=db.backref('recruits'))
     nhs_number = db.Column(db.String(20), nullable=False)
-    date_of_birth = db.Column(db.Date, nullable=True)
-    date_recruited = db.Column(db.Date, nullable=True)
-    date_created = db.Column(db.DateTime, nullable=True)
+    date_of_birth = db.Column(db.Date, nullable=False)
+    date_recruited = db.Column(db.Date, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, *args, **kwargs):
         self.practice_registration_id = kwargs.get('practice_registration').id
@@ -75,4 +86,9 @@ class Recruit(db.Model):
         self.date_of_birth = kwargs.get('date_of_birth')
         self.date_recruited = kwargs.get('date_recruited')
         self.date_created = datetime.datetime.now()
+
+daps_submission_recruits = db.Table('daps_submission_recruit',
+    db.Column('daps_submission_id', db.Integer, db.ForeignKey('daps_submission.id')),
+    db.Column('recruit_id', db.Integer, db.ForeignKey('recriut.id'))
+)
 
