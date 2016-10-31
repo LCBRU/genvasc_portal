@@ -4,7 +4,7 @@ echo "$0 Started: $(date)"
 tmpfile=$(mktemp /tmp/etl_practice_details.XXXXXX)
 
 # Extract data
-envsubst < /scripts/sql/etl_practice_details.sql | mysql  -h civicrmdb -u $CIVICRM_MYSQL_USER -p$CIVICRM_MYSQL_PASSWORD $CIVICRM_MYSQL_DATABASE > $tmpfile
+envsubst < /scripts/sql/etl_practice_details.sql | mysql  -h $CIVICRM_MYSQL_HOST -u $CIVICRM_MYSQL_USER -p$CIVICRM_MYSQL_PASSWORD $CIVICRM_MYSQL_DATABASE > $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "$0 failed extracting data"
