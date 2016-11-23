@@ -1,3 +1,5 @@
+proxy_cache_path /tmp/nginx levels=1:2 keys_zone=my_zone:10m inactive=1m;
+
 server {
 
     listen 80;
@@ -5,6 +7,7 @@ server {
     charset utf-8;
 
     location /static {
+        sendfile       off;
         alias /usr/src/app/portal/static;
     }
 

@@ -1,4 +1,4 @@
-import re
+import re, datetime
 from flask import render_template, request, redirect, url_for, flash
 from portal import app, db
 from portal.models import *
@@ -40,7 +40,7 @@ def recruits_add(code):
             practice_registration = practice_registration,
             user = current_user(),
             nhs_number = NhsNumberHelper.format(form.nhs_number.data),
-            date_of_birth = form.date_of_birth.data,
+            date_of_birth = form.get_date_of_birth(),
             date_recruited = form.date_recruited.data,
             )
 
@@ -65,7 +65,7 @@ def recruits_edit(code, id):
     if form.validate_on_submit():
 
         recruit.nhs_number = NhsNumberHelper.format(form.nhs_number.data)
-        recruit.date_of_birth = form.date_of_birth.data
+        recruit.date_of_birth = form.get_date_of_birth()
         recruit.date_recruited = form.date_recruited.data
 
         db.session.commit()

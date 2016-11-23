@@ -26,3 +26,8 @@ export ETL_TAB_GP_CUSTOM="civicrm_value_gp_surgery_data_3"
 export ETL_COL_GP_CODE="practice_code_7"
 export ETL_COL_GP_STATUS="practice_status_11"
 export ETL_ID_CCG_RELATIONSHIP_TYPE=31
+
+export REDCAP_MYSQL_HOST="briccsdb"
+export REDCAP_MYSQL_DATABASE="redcap6170_briccs"
+export REDCAP_MYSQL_USERNAME="auditor"
+export REDCAP_MYSQL_PASSWORD="g3s4t6"

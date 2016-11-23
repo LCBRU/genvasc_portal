@@ -17,6 +17,17 @@
     </div>
 {% endmacro %}
 
+{% macro render_splitdate_field(name, day_field, month_field, year_field) %}
+  <div class="form-group">
+    <label class="col-sm-3 control-label">{{ name }}</label>
+    <div class="col-sm-9">
+        {{ day_field(class="form-control day-form-control", **kwargs)|safe }}
+        {{ month_field(class="form-control month-form-control", **kwargs)|safe }}
+        {{ year_field(class="form-control year-form-control", **kwargs)|safe }}
+    </div>
+  </div>
+{% endmacro %}
+
 {% macro render_field_control(field) %}
     <div class="col-sm-6">
         {{ field(class="form-control", **kwargs)|safe }}

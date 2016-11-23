@@ -13,9 +13,10 @@
             {{ formhelper.render_field_short_label(form.nhs_number) }}
         </div>
     </div>
+    
     <div class="row">
         <div class="col-md-offset-3 col-md-6">
-            {{ formhelper.render_field_short_label(form.date_of_birth) }}
+            {{ formhelper.render_splitdate_field('Date of Birth', form.date_of_birth_day, form.date_of_birth_month, form.date_of_birth_year) }}
         </div>
     </div>
     <div class="row">

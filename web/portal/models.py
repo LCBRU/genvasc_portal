@@ -87,6 +87,18 @@ class Recruit(db.Model):
         self.date_recruited = kwargs.get('date_recruited')
         self.date_created = datetime.datetime.now()
 
+    @property
+    def date_of_birth_day(self):
+        return self.date_of_birth.day
+
+    @property
+    def date_of_birth_month(self):
+        return self.date_of_birth.month
+
+    @property
+    def date_of_birth_year(self):
+        return self.date_of_birth.year
+
 daps_submission_recruits = db.Table('daps_submission_recruit',
     db.Column('daps_submission_id', db.Integer, db.ForeignKey('daps_submission.id')),
     db.Column('recruit_id', db.Integer, db.ForeignKey('recriut.id'))

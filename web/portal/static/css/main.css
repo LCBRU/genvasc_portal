@@ -1,4 +1,5 @@
 /* custom styles */
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
 
 dl.inline dd {
   display: inline;
@@ -14,4 +15,9 @@ dl.inline dt{
 }
 dl.inline {
 	margin: 0;
+}
+
+.day-form-control, .month-form-control, .year-form-control {
+	width: auto;
+	display: inline-block;
 }

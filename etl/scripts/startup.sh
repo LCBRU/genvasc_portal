@@ -5,6 +5,11 @@ env | sed 's/^/export /' | cat - /scripts/etl_practice_details.template > /scrip
 chmod 744 /scripts/etl_practice_details.sh
 touch /cron.log
 
+# prepend application environment variables to crontab
+env | sed 's/^/export /' | cat - /scripts/etl_redcapToPortal_practiceDetails.template > /scripts/etl_redcapToPortal_practiceDetails.sh
+chmod 744 /scripts/etl_redcapToPortal_practiceDetails.sh
+touch /cron.log
+
 # Run cron deamon
 # -m off : sending mail is off 
 # tail makes the output to cron.log viewable with the $(docker logs container_id) command

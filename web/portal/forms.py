@@ -1,5 +1,5 @@
-import re
-from datetime import date
+import re, calendar
+from datetime import date, datetime
 from flask import flash, request
 from flask_wtf import FlaskForm
 from wtforms import StringField, BooleanField, SelectField, HiddenField, FormField, DecimalField, IntegerField, TextAreaField, Form as WtfForm
@@ -71,6 +71,61 @@ class DateMin(object):
         if field.data and field.data < self.min:
             raise ValidationError(self.message)
 
+class MinSplitDate(object):
+    def __init__(self, year_fieldname, month_fieldname, day_fieldname, min, message=None):
+        self.year_fieldname = year_fieldname
+        self.month_fieldname = month_fieldname
+        self.day_fieldname = day_fieldname
+        self.min = min
+        if message:
+            self.message = message
+        else:
+            self.message = "Cannot be before {0:%d/%m/%Y}".format(min)
+
+    def __call__(self, form, field):
+        value = None
+        try:
+            value = datetime.date(getattr(form, self.year_fieldname).data, getattr(form, self.month_fieldname).data, getattr(form, self.day_fieldname).data)
+        except ValueError:
+            pass
+
+        if value and value < self.min:
+            raise ValidationError(self.message)        
+
+class MaxSplitDate(object):
+    def __init__(self, year_fieldname, month_fieldname, day_fieldname, max, message=None):
+        self.year_fieldname = year_fieldname
+        self.month_fieldname = month_fieldname
+        self.day_fieldname = day_fieldname
+        self.max = max
+        if message:
+            self.message = message
+        else:
+            self.message = "Cannot be after {0:%d/%m/%Y}".format(max)
+
+    def __call__(self, form, field):
+        value = None
+        try:
+            value = datetime.date(getattr(form, self.year_fieldname).data, getattr(form, self.month_fieldname).data, getattr(form, self.day_fieldname).data)
+        except ValueError:
+            pass
+
+        if value and value > self.max:
+            raise ValidationError(self.message)        
+
+class ValidSplitDate(object):
+    def __init__(self, year_fieldname, month_fieldname, day_fieldname, message=u'Date is invalid.'):
+        self.year_fieldname = year_fieldname
+        self.month_fieldname = month_fieldname
+        self.day_fieldname = day_fieldname
+        self.message = message
+
+    def __call__(self, form, field):
+        try:
+            validDate = datetime.date(getattr(form, self.year_fieldname).data, getattr(form, self.month_fieldname).data, getattr(form, self.day_fieldname).data)
+        except ValueError:
+            raise ValidationError(self.message)
+
 class MinimumAgeAtRecruitment(object):
     def __init__(self, min, message=None):
         self.min = min
@@ -80,7 +135,13 @@ class MinimumAgeAtRecruitment(object):
         self.message = message
 
     def __call__(self, form, field):
-        if DateHelper.full_years_since(field.data, form.date_recruited.data) < self.min:
+        date_birth = None
+        try:
+            date_birth = datetime.date(form.date_of_birth_year.data, form.date_of_birth_month.data, form.date_of_birth_day.data)
+        except ValueError:
+            pass
+
+        if date_birth and DateHelper.full_years_since(date_birth, form.date_recruited.data) < self.min:
             raise ValidationError(self.message)
 
 class MaximumAgeAtRecruitment(object):
@@ -92,7 +153,13 @@ class MaximumAgeAtRecruitment(object):
         self.message = message
 
     def __call__(self, form, field):
-        if DateHelper.full_years_since(field.data, form.date_recruited.data) > self.max:
+        date_birth = None
+        try:
+            date_birth = datetime.date(form.date_of_birth_year.data, form.date_of_birth_month.data, form.date_of_birth_day.data)
+        except ValueError:
+            pass
+
+        if date_birth and DateHelper.full_years_since(date_birth, form.date_recruited.data) > self.max:
             raise ValidationError(self.message)
 
 class ValidNhsNumber(object):
@@ -154,17 +221,42 @@ class StaffMemberNewForm(FlashingForm):
     staff_member = FormField(StaffMemberForm)
 
 class RecruitNewForm(FlashingForm):
+    days = [(x, '{0:02d}'.format(x)) for x in range(1, 32)]
+    days.insert(0, (0, ''))
+    months = [(m, calendar.month_name[m]) for m in range(1,13)]
+    months.insert(0, (0, ''))
+    years = [(x, '{0:02d}'.format(x)) for x in range(datetime.date.today().year - 71, datetime.date.today().year - 39)]
+    years.insert(0, (0, ''))
+
     code = HiddenField('code', validators=[
         Exists(PracticeRegistration, PracticeRegistration.code, "Practice is not registered")
         ])
     nhs_number = StringField('NHS Number', validators=[DataRequired(), Length(max=20), ValidNhsNumber()])
-    date_of_birth = DateField('Date of Birth', validators=[DataRequired(), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)], format='%Y-%m-%d')
-    date_recruited = DateField('Date Recruited', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+    date_of_birth_day = SelectField('Date of Birth', choices=days, coerce=int, validators=[ValidSplitDate('date_of_birth_year', 'date_of_birth_month', 'date_of_birth_day'), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)])
+    date_of_birth_month = SelectField('Month', choices=months, coerce=int)
+    date_of_birth_year = SelectField('Year', choices=years, coerce=int)
+    date_recruited = DateField('Date Recruited', default=datetime.date.today, validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+
+    def get_date_of_birth(self):
+        return datetime.date(self.date_of_birth_year.data, self.date_of_birth_month.data, self.date_of_birth_day.data)
 
 class RecruitEditForm(FlashingForm):
+    days = [(x, '{0:02d}'.format(x)) for x in range(1, 32)]
+    days.insert(0, (0, ''))
+    months = [(m, calendar.month_name[m]) for m in range(1,13)]
+    months.insert(0, (0, ''))
+    years = [(x, '{0:02d}'.format(x)) for x in range(datetime.date.today().year - 71, datetime.date.today().year - 39)]
+    years.insert(0, (0, ''))
+
     id = HiddenField('id', validators=[
         Exists(Recruit, Recruit.id, "Recruit does not exist")
         ])
     nhs_number = StringField('NHS Number', validators=[DataRequired(), Length(max=20), ValidNhsNumber()])
-    date_of_birth = DateField('Date of Birth', validators=[DataRequired(), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)], format='%Y-%m-%d')
+    date_of_birth_day = SelectField('Date of Birth', choices=days, coerce=int, validators=[ValidSplitDate('date_of_birth_year', 'date_of_birth_month', 'date_of_birth_day'), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)])
+    date_of_birth_month = SelectField('Month', choices=months, coerce=int)
+    date_of_birth_year = SelectField('Year', choices=years, coerce=int)
     date_recruited = DateField('Date Recruited', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+
+    def get_date_of_birth(self):
+        return datetime.date(self.date_of_birth_year.data, self.date_of_birth_month.data, self.date_of_birth_day.data)
+
