@@ -1,11 +1,6 @@
 #!/usr/bin/env bash
 
 # prepend application environment variables to crontab
-env | sed 's/^/export /' | cat - /scripts/etl_practice_details.template > /scripts/etl_practice_details.sh
-chmod 744 /scripts/etl_practice_details.sh
-touch /cron.log
-
-# prepend application environment variables to crontab
 env | sed 's/^/export /' | cat - /scripts/etl_redcapToPortal_practiceDetails.template > /scripts/etl_redcapToPortal_practiceDetails.sh
 chmod 744 /scripts/etl_redcapToPortal_practiceDetails.sh
 touch /cron.log

@@ -9,3 +9,4 @@ class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = 'mysql://gpuser:gppass@mysql/gp'.format(
         DB_USER, DB_PASS, DB_NAME
     )
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

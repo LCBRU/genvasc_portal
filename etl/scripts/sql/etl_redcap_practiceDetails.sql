@@ -1,10 +1,10 @@
 SELECT
-      p.practice_name
-    , p.practice_code
+      p.code
+    , p.name
 FROM (
     SELECT
-         pn.value AS practice_name
-       , pc.value AS practice_code
+         pn.value AS name
+       , pc.value AS code
        , i.value AS initiated
     FROM	redcap_data pn
     JOIN	redcap_data pc ON

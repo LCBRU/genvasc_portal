@@ -7,7 +7,6 @@ server {
     charset utf-8;
 
     location /static {
-        sendfile       off;
         alias /usr/src/app/portal/static;
     }
 

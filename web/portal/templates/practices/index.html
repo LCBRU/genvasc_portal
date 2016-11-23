@@ -5,37 +5,31 @@
 
 <div class="page-header">
   <h1>Registered Practices</h1>
-  {{ formhelper.render_search(searchForm, 'practices_index', {'Add New' : 'practices_add_list'}) }}
+  {{ formhelper.render_search(searchForm, 'practices_index', {}) }}
 </div>
 
-<div class="list-group">
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Code</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for r in registrations.items %}
-    <div class="list-group-item row">
-      <div class="col-xs-2">
-        <div class="btn-group-vertical" role="group" aria-label="...">
-          <a class="btn btn-primary" href="{{ url_for('practices_edit', code=r.code) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Edit</a>
-          <a class="btn btn-primary" href="{{ url_for('practices_delete', code=r.code) }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Delete</a>
-        </div>
-      </div>
-      <div class="col-xs-8">
-        <h4>{{r.practice.name}}</h4>
-        <dl class="inline">
-            <dt>CCG</dt>
-            <dd>{{ r.practice.ccg_name }}</dd>
-            <dt>Registered By</dt>
-            <dd>{{ r.user.username }}</dd>
-        </dl>
-      </div>
-      <div class="col-xs-2">
-        <div class="btn-group-vertical" role="group" aria-label="...">
+    <tr>
+      <td>
           <a class="btn btn-default" href="{{ url_for('recruits_index', code=r.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
           <a class="btn btn-default"><span class="glyphicon glyphicon-gbp" aria-hidden="true"> Invoices</a>
           <a class="btn btn-default" href="{{ url_for('staff_index', code=r.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</a>
-        </div>
-      </div>
-    </div>
+      </td>
+      <td>{{r.practice.code}}</td>
+      <td>{{r.practice.name}}</td>
+    </tr>
   {% endfor %}
-</div>
+  </tbody>
+</table>
 
 {{ formhelper.render_pagination(registrations, 'practices_index', search=searchForm.search.data) }}
 

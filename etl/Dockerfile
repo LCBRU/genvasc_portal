@@ -9,7 +9,6 @@ RUN apt-get update && \
 
 ADD scripts /scripts
 
-RUN { crontab -l ; echo "* * * * * /scripts/etl_practice_details.sh >> /cron.log 2>&1"; } | crontab -
 RUN { crontab -l ; echo "* * * * * /scripts/etl_redcapToPortal_practiceDetails.sh >> /cron.log 2>&1"; } | crontab -
 
 CMD ["/scripts/startup.sh"]

@@ -3,14 +3,10 @@ from portal import db
 
 class Practice(db.Model):
 
-    __tablename__ = 'etl_practice_details'
+    __tablename__ = 'etl_practice'
 
-    id = db.Column(db.Integer)
     code = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
-    status = db.Column(db.String, nullable=False)
-    is_deleted = db.Column(db.Boolean, nullable=False)
-    ccg_name = db.Column(db.String, nullable=False)
 
 class User(db.Model):
 
@@ -23,19 +19,12 @@ class User(db.Model):
 class PracticeRegistration(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    user = db.relationship(User, backref=db.backref('registrations', cascade="all, delete-orphan"))
     code = db.Column(db.String, db.ForeignKey(Practice.code))
     date_created = db.Column(db.DateTime, nullable=False)
     practice = db.relationship(Practice)
-    date_initiated = db.Column(db.Date, nullable=True)
-    notes = db.Column(db.String)
 
     def __init__(self, *args, **kwargs):
-        self.user_id = kwargs.get('user').id
         self.code = kwargs.get('code')
-        self.date_initiated = kwargs.get('date_initiated')
-        self.notes = kwargs.get('notes')
         self.date_created = datetime.datetime.now()
 
 class StaffMember(db.Model):
@@ -56,15 +45,6 @@ class StaffMember(db.Model):
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
-class DapsSubmission(db.Model):
-
-    id = db.Column(db.Integer, primary_key=True)
-    date_submitted = db.Column(db.DateTime, nullable=False)
-    date_returned = db.Column(db.DateTime, nullable=False)
-
-    def __init__(self, *args, **kwargs):
-        self.date_submitted = datetime.datetime.now()
-
 class Recruit(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -72,8 +52,6 @@ class Recruit(db.Model):
     practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
     user = db.relationship(User, backref=db.backref('recruits', cascade="all, delete-orphan"))
-    daps_submission_id = db.Column(db.Integer, db.ForeignKey(DapsSubmission.id))
-    daps_submission = db.relationship(DapsSubmission, backref=db.backref('recruits'))
     nhs_number = db.Column(db.String(20), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
     date_recruited = db.Column(db.Date, nullable=False)
@@ -98,9 +76,3 @@ class Recruit(db.Model):
     @property
     def date_of_birth_year(self):
         return self.date_of_birth.year
-
-daps_submission_recruits = db.Table('daps_submission_recruit',
-    db.Column('daps_submission_id', db.Integer, db.ForeignKey('daps_submission.id')),
-    db.Column('recruit_id', db.Integer, db.ForeignKey('recriut.id'))
-)
-
