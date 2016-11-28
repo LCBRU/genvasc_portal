@@ -12,20 +12,16 @@
 export WEB_DEBUG=False
 export WEB_SECRET_KEY="rD3!Z9jkj8kD"
 
+export MYSQL_MYSQL_HOST=mysql
 export MYSQL_MYSQL_DATABASE=gp
 export MYSQL_MYSQL_USER=gpuser
 export MYSQL_MYSQL_PASSWORD=gppass
 export MYSQL_MYSQL_RANDOM_ROOT_PASSWORD=yes
 
-export CIVICRMDB_MYSQL_DATABASE=civicrm
-export CIVICRMDB_MYSQL_USER=civiuser
-export CIVICRMDB_MYSQL_PASSWORD=civipass
-export CIVICRMDB_MYSQL_RANDOM_ROOT_PASSWORD=yes
-
-export ETL_TAB_GP_CUSTOM="civicrm_value_gp_surgery_data_3"
-export ETL_COL_GP_CODE="practice_code_7"
-export ETL_COL_GP_STATUS="practice_status_11"
-export ETL_ID_CCG_RELATIONSHIP_TYPE=31
+export CIVICRMDB_MYSQL_HOST=uhlbriccsdbdev.xuhl-tr.nhs.uk
+export CIVICRMDB_MYSQL_DATABASE=richdev_drupal
+export CIVICRMDB_MYSQL_USER=commondev
+export CIVICRMDB_MYSQL_PASSWORD=greetings_earthling
 
 export REDCAP_MYSQL_HOST="briccsdb"
 export REDCAP_MYSQL_DATABASE="redcap6170_briccs"

@@ -1,11 +1,14 @@
 CREATE TABLE recruit (
-        id INTEGER PRIMARY KEY AUTO_INCREMENT
+        id CHAR(16) PRIMARY KEY NOT NULL
+    ,   source_system VARCHAR(50) NOT NULL
     ,   practice_registration_id INTEGER NOT NULL
     ,   user_id INTEGER NOT NULL
     ,	nhs_number VARCHAR(20) NOT NULL
     ,	date_of_birth DATE NOT NULL
     ,	date_recruited DATE NOT NULL
     ,	date_created DATETIME NOT NULL
+    ,   civicrm_contact_id INTEGER NULL
+    ,   civicrm_case_id INTEGER NULL
 	,	CONSTRAINT fk_recruit_user FOREIGN KEY (user_id) REFERENCES user(id)
 	,	CONSTRAINT fk_recruit_practice_registration FOREIGN KEY (practice_registration_id) REFERENCES practice_registration(id)
     )
@@ -17,4 +20,12 @@ ON recruit (user_id)
 
 CREATE INDEX idx_recruit_practice_registration_id
 ON recruit (practice_registration_id)
+;
+
+CREATE UNIQUE INDEX idx_recruit_civicrm_case_id
+ON recruit (civicrm_case_id)
+;
+
+CREATE INDEX idx_recruit_civicrm_contact_id
+ON recruit (civicrm_contact_id)
 ;

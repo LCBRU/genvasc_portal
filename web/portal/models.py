@@ -1,4 +1,4 @@
-import datetime
+import datetime, uuid
 from portal import db
 
 class Practice(db.Model):
@@ -47,7 +47,8 @@ class StaffMember(db.Model):
 
 class Recruit(db.Model):
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(16), primary_key=True)
+    source_system = db.Column(db.String(50), nullable=False)
     practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
     practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
@@ -64,6 +65,8 @@ class Recruit(db.Model):
         self.date_of_birth = kwargs.get('date_of_birth')
         self.date_recruited = kwargs.get('date_recruited')
         self.date_created = datetime.datetime.now()
+        self.id = uuid.uuid1()
+        self.source_system = 'PORTAL'
 
     @property
     def date_of_birth_day(self):

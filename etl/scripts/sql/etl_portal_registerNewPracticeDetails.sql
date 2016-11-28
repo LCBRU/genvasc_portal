@@ -7,3 +7,4 @@ WHERE	code NOT IN (
 	SELECT 	code
 	FROM	practice_registration
 )
+;

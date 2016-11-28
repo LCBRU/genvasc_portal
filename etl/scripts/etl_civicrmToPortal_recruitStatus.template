@@ -1,10 +1,10 @@
 
 echo "$0 Started: $(date)"
 
-tmpfile=$(mktemp /tmp/etl_practice.XXXXXX)
+tmpfile=$(mktemp /tmp/etl_recruit_status.XXXXXX)
 
 # Extract data
-envsubst < /scripts/sql/etl_redcap_practiceDetails.sql | mysql  -h $REDCAP_MYSQL_HOST -u $REDCAP_MYSQL_USERNAME -p$REDCAP_MYSQL_PASSWORD $REDCAP_MYSQL_DATABASE > $tmpfile
+envsubst < /scripts/sql/etl_civicrm_recruitStatus.sql | mysql  -h $CIVICRM_MYSQL_HOST -u $CIVICRM_MYSQL_USER -p$CIVICRM_MYSQL_PASSWORD $CIVICRM_MYSQL_DATABASE > $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "$0 failed extracting data"
@@ -24,10 +24,10 @@ fi
 rm "$tmpfile"
 
 # Register New Practices
-envsubst < /scripts/sql/etl_portal_registerNewPracticeDetails.sql | mysql -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD $PORTAL_MYSQL_DATABASE
+envsubst < /scripts/sql/etl_portal_importRecruitsStatus.sql | mysql -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD $PORTAL_MYSQL_DATABASE
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed registering new practices"
+    echo "$0 failed etl_portal_importRecruitsStatus"
     echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
     exit 1
 fi

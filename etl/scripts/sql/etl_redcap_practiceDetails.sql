@@ -1,6 +1,6 @@
 SELECT
-      p.code
-    , p.name
+      LEFT(TRIM(p.code), 6) AS code
+    , TRIM(p.name) AS name
 FROM (
     SELECT
          pn.value AS name

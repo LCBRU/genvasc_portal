@@ -53,7 +53,7 @@ def recruits_add(code):
 
     return render_template('practices/recruits/edit.html', form=form, practice_registration=practice_registration)
 
-@app.route('/practices/<string:code>/recruits/<int:id>/edit', methods=['GET','POST'])
+@app.route('/practices/<string:code>/recruits/<string:id>/edit', methods=['GET','POST'])
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 @must_exist(model=Recruit, field=Recruit.id, request_field='id', error_redirect='practices_index', message="Recruit does not exist")
 def recruits_edit(code, id):

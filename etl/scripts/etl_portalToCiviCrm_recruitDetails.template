@@ -1,10 +1,10 @@
 
 echo "$0 Started: $(date)"
 
-tmpfile=$(mktemp /tmp/etl_practice.XXXXXX)
+tmpfile=$(mktemp /tmp/etl_portal_recruits.XXXXXX)
 
 # Extract data
-envsubst < /scripts/sql/etl_redcap_practiceDetails.sql | mysql  -h $REDCAP_MYSQL_HOST -u $REDCAP_MYSQL_USERNAME -p$REDCAP_MYSQL_PASSWORD $REDCAP_MYSQL_DATABASE > $tmpfile
+envsubst < /scripts/sql/etl_portal_recruitDetails.sql | mysql  -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD $PORTAL_MYSQL_DATABASE > $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "$0 failed extracting data"
@@ -13,7 +13,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Import data into table
-mysqlimport -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD --lock-tables --delete --ignore-lines=1 --local $PORTAL_MYSQL_DATABASE $tmpfile
+mysqlimport -h $CIVICRM_MYSQL_HOST -u $CIVICRM_MYSQL_USER -p$CIVICRM_MYSQL_PASSWORD --lock-tables --delete --ignore-lines=1 --local $CIVICRM_MYSQL_DATABASE $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "$0 failed loading data"
@@ -24,7 +24,7 @@ fi
 rm "$tmpfile"
 
 # Register New Practices
-envsubst < /scripts/sql/etl_portal_registerNewPracticeDetails.sql | mysql -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD $PORTAL_MYSQL_DATABASE
+envsubst < /scripts/sql/etl_civicrm_importRecruitDetails.sql | mysql -h $CIVICRM_MYSQL_HOST -u $CIVICRM_MYSQL_USER -p$CIVICRM_MYSQL_PASSWORD $CIVICRM_MYSQL_DATABASE
 
 if [ $? -ne 0 ]; then
     echo "$0 failed registering new practices"
