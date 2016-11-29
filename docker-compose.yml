@@ -39,7 +39,7 @@ services:
       MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
-    command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app
+    command: /usr/local/bin/gunicorn --config gunicorn.conf -w 2 -b :8000 app:app
 
   nginx:
     restart: always

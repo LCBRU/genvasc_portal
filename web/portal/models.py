@@ -79,3 +79,16 @@ class Recruit(db.Model):
     @property
     def date_of_birth_year(self):
         return self.date_of_birth.year
+
+    def is_portal_created(self):
+        return self.source_system = 'PORTAL'
+
+class RecruitStatus(db.Model):
+
+    __tablename__ = 'etl_recruit_status'
+
+    id = db.Column(db.String(16), db.ForeignKey(Recruit.id), primary_key=True)
+    status = db.Column(db.String(100))
+    study_id = db.Column(db.String(100))
+    processed_by = db.Column(db.String(500))
+

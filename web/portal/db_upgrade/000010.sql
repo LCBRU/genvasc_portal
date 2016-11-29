@@ -5,5 +5,6 @@ CREATE TABLE etl_recruit_status (
     ,   study_id VARCHAR(100) NOT NULL
     ,	civicrm_contact_id INT NULL
     ,	civicrm_case_id INT NULL
+    ,   processed_by VARCHAR(500)
     )
 ;
