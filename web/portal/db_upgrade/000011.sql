@@ -1,5 +1,5 @@
 CREATE TABLE etl_missing_recruits (
-        id CHAR(16) NOT NULL PRIMARY KEY
+        id VARCHAR(50) NOT NULL PRIMARY KEY
     ,	source_system VARCHAR(50) NOT NULL
     ,	date_of_birth DATE NULL
     ,	nhs_number VARCHAR(100) NULL

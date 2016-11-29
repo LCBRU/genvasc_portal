@@ -47,7 +47,7 @@ class StaffMember(db.Model):
 
 class Recruit(db.Model):
 
-    id = db.Column(db.String(16), primary_key=True)
+    id = db.Column(db.String(50), primary_key=True)
     source_system = db.Column(db.String(50), nullable=False)
     practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
     practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
@@ -81,13 +81,13 @@ class Recruit(db.Model):
         return self.date_of_birth.year
 
     def is_portal_created(self):
-        return self.source_system = 'PORTAL'
+        return self.source_system == 'PORTAL'
 
 class RecruitStatus(db.Model):
 
     __tablename__ = 'etl_recruit_status'
 
-    id = db.Column(db.String(16), db.ForeignKey(Recruit.id), primary_key=True)
+    id = db.Column(db.String(50), db.ForeignKey(Recruit.id), primary_key=True)
     status = db.Column(db.String(100))
     study_id = db.Column(db.String(100))
     processed_by = db.Column(db.String(500))

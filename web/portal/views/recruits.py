@@ -56,6 +56,7 @@ def recruits_add(code):
 @app.route('/practices/<string:code>/recruits/<string:id>/edit', methods=['GET','POST'])
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 @must_exist(model=Recruit, field=Recruit.id, request_field='id', error_redirect='practices_index', message="Recruit does not exist")
+@recruit_is_portal_created()
 def recruits_edit(code, id):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
     recruit = Recruit.query.get(id)
