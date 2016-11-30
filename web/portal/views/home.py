@@ -1,9 +1,6 @@
-from flask import render_template, request
-
-from portal import app, db
-
-from portal.models import *
+from flask import redirect, url_for
+from portal import app
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+	return redirect(url_for('practices_index'))

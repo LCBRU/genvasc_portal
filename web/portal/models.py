@@ -1,6 +1,6 @@
 import datetime, uuid
 from portal import db
-from flask.ext.security import UserMixin, RoleMixin
+from flask_security import UserMixin, RoleMixin
 
 class Practice(db.Model):
 

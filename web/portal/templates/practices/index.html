@@ -4,7 +4,7 @@
 {% block content %}
 
 <div class="page-header">
-  <h1>Registered Practices</h1>
+  <h1>Practices</h1>
   {{ formhelper.render_search(searchForm, 'practices_index', {}) }}
 </div>
 
@@ -21,7 +21,6 @@
     <tr>
       <td>
           <a class="btn btn-default" href="{{ url_for('recruits_index', code=r.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
-          <a class="btn btn-default"><span class="glyphicon glyphicon-gbp" aria-hidden="true"> Invoices</a>
           <a class="btn btn-default" href="{{ url_for('staff_index', code=r.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</a>
       </td>
       <td>{{r.practice.code}}</td>
