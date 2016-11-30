@@ -12,6 +12,7 @@ SELECT
    , gr.case_id
    , gr.contact_id
    , rel_c.display_name AS processed_by
+   , rel_r.start_date AS processed_date
 FROM genvasc_portal_recruits gr
 LEFT JOIN daps_submission_participant dp ON dp.id = gr.daps_submission_participant_id
 LEFT JOIN daps_submission ds ON ds.id = dp.daps_submission_id

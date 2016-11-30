@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="col-xs-10">
-        <dl class="inline">
+        <dl class="inline col-xs-6">
             <dt>NHS Number</dt>
             <dd>{{ r.nhs_number }}</dd>
             <dt>Date of Birth</dt>
@@ -28,6 +28,16 @@
             <dd>{{ r.date_recruited | date_format }}</dd>
             <dt>Recruited By</dt>
             <dd>{{ r.user.username }}</dd>
+        </dl>
+        <dl class="inline col-xs-6">
+            <dt>Status</dt>
+            <dd>{{ r.status.status | default_if_none('Created') }}</dd>
+            <dt>Study ID</dt>
+            <dd>{{ r.status.study_id | blank_if_none }}</dd>
+            <dt>Processed</dt>
+            <dd>{{ r.status.processed_date | date_format }}</dd>
+            <dt>Processed By</dt>
+            <dd>{{ r.status.processed_by | blank_if_none }}</dd>
         </dl>
       </div>
     </div>

@@ -57,6 +57,7 @@ class Recruit(db.Model):
     date_of_birth = db.Column(db.Date, nullable=False)
     date_recruited = db.Column(db.Date, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False)
+    status = db.relationship("RecruitStatus", uselist=False, back_populates="recruit")
 
     def __init__(self, *args, **kwargs):
         self.practice_registration_id = kwargs.get('practice_registration').id
@@ -88,7 +89,9 @@ class RecruitStatus(db.Model):
     __tablename__ = 'etl_recruit_status'
 
     id = db.Column(db.String(50), db.ForeignKey(Recruit.id), primary_key=True)
+    recruit = db.relationship(Recruit, uselist=False, back_populates="status")
     status = db.Column(db.String(100))
     study_id = db.Column(db.String(100))
     processed_by = db.Column(db.String(500))
+    processed_date = db.Column(db.Date)
 

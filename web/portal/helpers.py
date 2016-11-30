@@ -8,11 +8,25 @@ from portal.models import *
 
 @app.template_filter('datetime_format')
 def datetime_format(value):
-    return value.strftime('%c')
+    if value:
+        return value.strftime('%c')
+    else:
+        return ''
 
 @app.template_filter('date_format')
 def date_format(value):
-    return value.strftime('%-d %b %Y')
+    if value:
+        return value.strftime('%-d %b %Y')
+    else:
+        return ''
+
+@app.template_filter('blank_if_none')
+def blank_if_none(value):
+    return value or ''
+
+@app.template_filter('default_if_none')
+def default_if_none(value, default):
+    return value or default
 
 def templated(template=None):
     def decorator(f):
