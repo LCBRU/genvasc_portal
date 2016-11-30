@@ -10,9 +10,13 @@ class Practice(db.Model):
     name = db.Column(db.String, nullable=False)
 
 class Role(db.Model, RoleMixin):
+    ADMIN_ROLENAME = 'admin'
+
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
+
+
 
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -39,6 +43,9 @@ class User(db.Model, UserMixin):
                             backref=db.backref('users', lazy='dynamic'))
     pactices = db.relationship('PracticeRegistration', secondary=practice_registrations_users,
                             backref=db.backref('users', lazy='dynamic'))
+
+    def is_admin(self):
+        return self.has_role(Role.ADMIN_ROLENAME)
 
 class PracticeRegistration(db.Model):
 

@@ -1,10 +1,12 @@
 from flask import render_template, request, redirect, url_for, flash
+from flask_security import login_required
 from portal import app, db
 from portal.models import *
 from portal.forms import *
 from portal.helpers import *
 
 @app.route('/practices/')
+@login_required
 def practices_index():
     searchForm = SearchForm(formdata = request.args)
 
@@ -23,4 +25,4 @@ def practices_index():
     return render_template('practices/index.html', registrations=registrations, searchForm=searchForm)
 
 def current_user():
-    return User.query.filter(User.username == 'richard').first()
+    return User.query.filter(User.email == 'richard.a.bramley@uhl-tr.nhs.uk').first()

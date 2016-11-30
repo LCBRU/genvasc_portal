@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from portal.config import BaseConfig
 from flask_wtf.csrf import CsrfProtect
+from flask_security import Security, SQLAlchemyUserDatastore
 import logging
 import traceback
 
@@ -26,9 +27,15 @@ def internal_error(exception):
     app.logger.error(traceback.format_exc())
     return render_template('500.html'), 500
 
+# Set up database
 db = SQLAlchemy(app)
 
 import portal.database
 database.init_db()
+
+# Setup Flask-Security
+from portal.models import *
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+security = Security(app, user_datastore)
 
 from portal.views import *
