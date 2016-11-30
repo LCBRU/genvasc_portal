@@ -9,15 +9,18 @@ class Practice(db.Model):
     code = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
-# Define models
-roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
-
 class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
+
+roles_users = db.Table('roles_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
+
+practice_registrations_users = db.Table('practice_registrations_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+        db.Column('practice_registration_id', db.Integer(), db.ForeignKey('practice_registration.id')))
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +36,8 @@ class User(db.Model, UserMixin):
     current_login_ip = db.Column(db.String(50))
     login_count = db.Column(db.Integer())
     roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
+    pactices = db.relationship('PracticeRegistration', secondary=practice_registrations_users,
                             backref=db.backref('users', lazy='dynamic'))
 
 class PracticeRegistration(db.Model):
