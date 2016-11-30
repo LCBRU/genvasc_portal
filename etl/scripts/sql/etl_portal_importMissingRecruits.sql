@@ -1,4 +1,4 @@
-SELECT id FROM user WHERE username = 'system' INTO @system_user_id
+SELECT id FROM user WHERE email = 'lcbruit@uhl-tr.nhs.uk' INTO @system_user_id
 ;
 
 INSERT INTO recruit (id, source_system, practice_registration_id, user_id, nhs_number, date_of_birth, date_recruited, date_created, civicrm_contact_id, civicrm_case_id)

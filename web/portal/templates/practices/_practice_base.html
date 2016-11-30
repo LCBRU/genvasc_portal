@@ -1,0 +1,21 @@
+{% extends "_base.html" %}
+{% import "_formHelpers.html" as formhelper %}
+
+{% block content %}
+
+<div class="page-header">
+  <h1>{{ practice_registration.practice.name }}</h1>
+</div>
+
+<ul class="nav nav-tabs">
+  <li role="presentation" {% if tab == 'recruits' %}class="active"{% endif %}>
+    <a href="{{ url_for('recruits_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
+  </li>
+  <li role="presentation" {% if tab == 'personnel' %}class="active"{% endif %}>
+    <a href="{{ url_for('staff_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</a>
+  </li>
+</ul>
+
+{% block practice_content %}{% endblock %}
+
+{% endblock %}

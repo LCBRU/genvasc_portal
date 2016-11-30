@@ -7,6 +7,7 @@ from portal.helpers import *
 from portal.datatypes import *
 
 @app.route('/practices/<string:code>/recruits')
+@app.route('/practices/<string:code>')
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 def recruits_index(code):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()

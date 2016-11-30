@@ -1,11 +1,11 @@
-{% extends "_base.html" %}
+{% extends "practices/_practice_base.html" %}
+{% set tab = "personnel" %}
 {% import "_formHelpers.html" as formhelper %}
 
-{% block content %}
+{% block practice_content %}
 
 <div class="page-header">
-  <h1>Staff for {{ practice_registration.practice.name }}</h1>
-  {{ formhelper.render_search(searchForm, 'staff_index', { 'Add New' : 'staff_add'}, code=practice_registration.code) }}
+  {{ formhelper.render_search(searchForm, 'staff_index', { 'Add Staff Member' : 'staff_add'}, code=practice_registration.code) }}
 </div>
 
 <div class="list-group">
