@@ -16,7 +16,9 @@ class Role(db.Model, RoleMixin):
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
 
-
+    def __init__(self, *args, **kwargs):
+        self.name = kwargs.get('name')
+        self.description = kwargs.get('description')
 
 roles_users = db.Table('roles_users',
         db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
@@ -43,6 +45,13 @@ class User(db.Model, UserMixin):
                             backref=db.backref('users', lazy='dynamic'))
     pactices = db.relationship('PracticeRegistration', secondary=practice_registrations_users,
                             backref=db.backref('users', lazy='dynamic'))
+
+    def __init__(self, *args, **kwargs):
+        self.email = kwargs.get('email')
+        self.password = kwargs.get('password')
+        self.first_name = kwargs.get('first_name')
+        self.last_name = kwargs.get('last_name')
+        self.active = 0
 
     def is_admin(self):
         return self.has_role(Role.ADMIN_ROLENAME)
