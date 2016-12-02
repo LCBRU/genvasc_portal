@@ -52,4 +52,12 @@ def init_security():
       user_datastore.create_user(email='lcbruit@uhl-tr.nhs.uk', password='iuhiuhiwuheicwiew', first_name='System', last_name='User')
       db.session.commit()
 
+    if (not user_datastore.get_user('user@practice.nhs.uk')):
+      practice = PracticeRegistration.query.filter(PracticeRegistration.code == 'C82072').first()
+      if practice:
+        practice_user = user_datastore.create_user(email='user@practice.nhs.uk', password='genvasc', first_name='practice', last_name='User')
+        user_datastore.activate_user(practice_user)
+        practice_user.practices.append(practice)
+        db.session.commit()
+
 from portal.views import *

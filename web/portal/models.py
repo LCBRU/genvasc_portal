@@ -43,7 +43,7 @@ class User(db.Model, UserMixin):
     login_count = db.Column(db.Integer())
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
-    pactices = db.relationship('PracticeRegistration', secondary=practice_registrations_users,
+    practices = db.relationship('PracticeRegistration', secondary=practice_registrations_users,
                             backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, *args, **kwargs):
@@ -55,6 +55,10 @@ class User(db.Model, UserMixin):
 
     def is_admin(self):
         return self.has_role(Role.ADMIN_ROLENAME)
+
+    @property
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
 
 class PracticeRegistration(db.Model):
 

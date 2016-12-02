@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_security import login_required
+from flask_security import login_required, current_user
 from portal import app, db
 from portal.models import *
 from portal.forms import *
@@ -12,6 +12,9 @@ def practices_index():
 
     q = PracticeRegistration.query.join(Practice, PracticeRegistration.practice)
 
+    if (not current_user.is_admin()):
+        q = q.filter(PracticeRegistration.id.in_([p.id for p in current_user.practices]))
+
     if searchForm.search.data:
         q = q.filter(Practice.name.like("%{0}%".format(searchForm.search.data)))
 
@@ -22,7 +25,7 @@ def practices_index():
             per_page=10,
             error_out=False))
 
-    return render_template('practices/index.html', registrations=registrations, searchForm=searchForm)
+    if registrations.total == 1:
+        return redirect(url_for('recruits_index', code=registrations.items[0].code))
 
-def current_user():
-    return User.query.filter(User.email == 'richard.a.bramley@uhl-tr.nhs.uk').first()
+    return render_template('practices/index.html', registrations=registrations, searchForm=searchForm)

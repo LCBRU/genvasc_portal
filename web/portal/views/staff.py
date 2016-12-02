@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
+from flask_security import login_required, current_user
 from sqlalchemy import func
 from portal import app, db
 from portal.models import *
@@ -7,6 +8,7 @@ from portal.helpers import *
 
 @app.route('/practices/<string:code>/staff')
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
+@login_required
 def staff_index(code):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
 
@@ -28,6 +30,7 @@ def staff_index(code):
 
 @app.route('/practices/<string:code>/staff/add', methods=['GET','POST'])
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
+@login_required
 def staff_add(code):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
 
@@ -54,6 +57,7 @@ def staff_add(code):
 @app.route('/practices/<string:code>/staff/<int:id>/edit', methods=['GET','POST'])
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 @must_exist(model=StaffMember, field=StaffMember.id, request_field='id', error_redirect='practices_index', message="Staff member does not exist")
+@login_required
 def staff_edit(code, id):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
     staff_member = StaffMember.query.get(id)
@@ -76,6 +80,7 @@ def staff_edit(code, id):
 @app.route('/practices/<string:code>/staff/<int:id>/delete')
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
 @must_exist(model=StaffMember, field=StaffMember.id, request_field='id', error_redirect='practices_index', message="Staff member does not exist")
+@login_required
 def staff_delete(code, id):
     practice_registration = PracticeRegistration.query.filter(PracticeRegistration.code == code).first()
     staff_member = StaffMember.query.get(id)
@@ -84,6 +89,7 @@ def staff_delete(code, id):
 
 @app.route('/practices/<string:code>/staff/<int:id>/delete', methods=['POST'])
 @must_exist(model=PracticeRegistration, field=PracticeRegistration.code, request_field='code', error_redirect='practices_index', message="Practice is not registered")
+@login_required
 def staff_delete_confirm(code, id):
     form = DeleteForm()
 
