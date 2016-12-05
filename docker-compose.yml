@@ -54,7 +54,10 @@ services:
 
   nginx:
     restart: always
-    build: ./nginx/
+    build:
+      context: ./nginx/
+      args:
+        deployment_environment: development
     depends_on:
       - web
     ports:
