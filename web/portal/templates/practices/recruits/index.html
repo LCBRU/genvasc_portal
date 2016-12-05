@@ -14,7 +14,7 @@
       <div class="col-xs-2">
         <div class="btn-group-vertical" role="group" aria-label="...">
           {% if r.is_portal_created() %}
-            <a class="btn btn-primary" href="{{ url_for('recruits_edit', code=practice_registration.code, id=r.id) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Edit</a>
+            <a class="btn btn-primary" href="{{ url_for('recruits_edit', code=practice_registration.code, id=r.id) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Edit</span></a>
           {% endif %}
         </div>
       </div>

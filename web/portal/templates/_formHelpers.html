@@ -126,14 +126,14 @@
 <form method="GET" class="form-horizontal" action="{{ url_for(searchview, **kwargs) }}">
   <div class="input-group">
       {{ searchForm.search(class="form-control") | safe }}
-      <span class="input-group-btn">
+      <div class="input-group-btn">
         <button type="submit" class="btn btn-primary">Search</button>
         <a class="btn btn-primary" href="{{ url_for(searchview, **kwargs) }}">Clear</a>
 
         {% for key, value in buttons.items() %}
           <a class="btn btn-primary" href="{{ url_for(value, **kwargs) }}">{{ key }}</a>
         {% endfor %}
-      </span>
+      </div>
   </div>
 </form>
 {% endmacro %}

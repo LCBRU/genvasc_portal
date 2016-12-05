@@ -9,10 +9,10 @@
 
 <ul class="nav nav-tabs">
   <li role="presentation" {% if tab == 'recruits' %}class="active"{% endif %}>
-    <a href="{{ url_for('recruits_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</a>
+    <a href="{{ url_for('recruits_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</span></a>
   </li>
   <li role="presentation" {% if tab == 'personnel' %}class="active"{% endif %}>
-    <a href="{{ url_for('staff_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</a>
+    <a href="{{ url_for('staff_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"> Personnel</span></a>
   </li>
 </ul>
 
