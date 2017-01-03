@@ -1,18 +1,6 @@
 version: '2'
 
 services:
-  etl:
-    depends_on:
-      - mysql
-    links:
-      - mysql:mysql
-
-  web:
-    depends_on:
-      - mysql
-    links:
-      - mysql:mysql
-
   nginx:
     build:
       args:
