@@ -8,7 +8,7 @@ class BaseConfig(object):
     DB_USER = os.environ['MYSQL_USER']
     DB_PASS = os.environ['MYSQL_PASSWORD']
     SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}/{3}'.format(
-        DB_USER, DB_PASS, DB_NAME
+        DB_USER, DB_PASS, DB_HOST, DB_NAME
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO=False
