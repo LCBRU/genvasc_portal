@@ -13,12 +13,9 @@
   JOIN ${CIVICRMDB_CIVICRM_DATABASE}.${CIVICRMDB_CONTACT_IDS_TABLE} cids ON cids.entity_id = con.id
   JOIN ${CIVICRMDB_CIVICRM_DATABASE}.civicrm_relationship practiceRel ON practiceRel.case_id = cas.id AND practiceRel.relationship_type_id = ${CIVICRMDB_PRACTICE_RELATIONSHIP_TYPE}
   JOIN ${CIVICRMDB_CIVICRM_DATABASE}.${CIVICRMDB_SURGERY_DATA_TABLE} gpCustom ON gpCustom.entity_id = practiceRel.contact_id_b
+  LEFT JOIN genvasc_portal_recruits gpr ON gpr.case_id = cas.id
   WHERE cas.case_type_id = $CIVICRMDB_GENVASC_CASE_TYPE
-      AND cas.id NOT IN (
-        SELECT case_id
-        FROM genvasc_portal_recruits
-        WHERE case_id IS NOT NULL
-        )
       AND LENGTH(TRIM(COALESCE(cids.${CIVICRMDB_NHS_NUMBER_NAME}, ''))) > 0
       AND con.birth_date IS NOT NULL
+      AND gpr.case_id IS NULL
 ;
