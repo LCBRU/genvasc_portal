@@ -16,9 +16,9 @@ services:
   nginx:
     build:
       args:
-        deployment_environment: production
+        deployment_environment: development
     ports:
-      - "443:443"
+      - "80:80"
 
   mysql:
     restart: always

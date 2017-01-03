@@ -4,10 +4,6 @@ services:
   etl:
     restart: always
     build: ./etl
-    depends_on:
-      - mysql
-    links:
-      - mysql:mysql
     environment:
       PORTAL_MYSQL_HOST: ${MYSQL_MYSQL_HOST}
       PORTAL_MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
@@ -36,12 +32,8 @@ services:
   web:
     restart: always
     build: ./web
-    depends_on:
-      - mysql
     expose:
       - "8000"
-    links:
-      - mysql:mysql
     volumes:
       - /usr/src/app/portal/static
     environment:
@@ -67,14 +59,3 @@ services:
       - web:ro
     links:
       - web:web
-
-  mysql:
-    restart: always
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_MYSQL_RANDOM_ROOT_PASSWORD}
-    expose:
-      - "3306"
