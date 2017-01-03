@@ -17,6 +17,6 @@ FROM (
 			  AND i.field_name = 'genvasc_initiated'
 	WHERE
 	        pn.field_name = 'practice_name'
-		 AND pn.project_id = 41
+		 AND pn.project_id IN (38, 41)
 	GROUP BY pn.record
 ) p
