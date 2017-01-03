@@ -19,14 +19,3 @@ services:
         deployment_environment: production
     ports:
       - "443:443"
-
-  mysql:
-    restart: always
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_MYSQL_RANDOM_ROOT_PASSWORD}
-    expose:
-      - "3306"
