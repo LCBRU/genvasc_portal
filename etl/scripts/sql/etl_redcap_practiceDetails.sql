@@ -20,4 +20,3 @@ FROM (
 		 AND pn.project_id = 41
 	GROUP BY pn.record
 ) p
-WHERE p.initiated = 1
