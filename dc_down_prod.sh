@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-source ./environment
+source ./production_environment
 docker-compose down --remove-orphans

@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-. ./environment
+. ./production_environment
 docker-compose -f docker-compose.yml -f production.yml build
