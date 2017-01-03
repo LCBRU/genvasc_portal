@@ -35,5 +35,5 @@ export CIVICRMDB_GENVASC_CASE_TYPE=3
 
 export REDCAP_MYSQL_HOST="briccsdb"
 export REDCAP_MYSQL_DATABASE="redcap6170_briccs"
-export REDCAP_MYSQL_USERNAME="auditor"
-export REDCAP_MYSQL_PASSWORD="g3s4t6"
+export REDCAP_MYSQL_USERNAME="etl"
+export REDCAP_MYSQL_PASSWORD="ferio_8erh3f"
