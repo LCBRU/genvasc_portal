@@ -11,7 +11,7 @@ FROM (
                 pc.record = pn.record
 			  AND pc.project_id = pn.project_id
 			  AND pc.field_name = 'practice_code'
-	JOIN	redcap_data i ON
+	LEFT JOIN	redcap_data i ON
 	            i.record = pn.record
 			  AND i.project_id = pn.project_id
 			  AND i.field_name = 'genvasc_initiated'
