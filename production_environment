@@ -12,11 +12,10 @@
 export WEB_DEBUG=False
 export WEB_SECRET_KEY="rD3!Z9jkj8kD"
 
-export MYSQL_MYSQL_HOST=mysql
-export MYSQL_MYSQL_DATABASE=gp
-export MYSQL_MYSQL_USER=gpuser
-export MYSQL_MYSQL_PASSWORD=gppass
-export MYSQL_MYSQL_RANDOM_ROOT_PASSWORD=yes
+export MYSQL_MYSQL_HOST=briccsdb
+export MYSQL_MYSQL_DATABASE=genvasc_gp_portal
+export MYSQL_MYSQL_USER=gp_portal_user
+export MYSQL_MYSQL_PASSWORD=oiuuoihgiug
 
 export CIVICRMDB_MYSQL_HOST=uhlbriccsdbdev.xuhl-tr.nhs.uk
 export CIVICRMDB_MYSQL_DATABASE=richdev_drupal
