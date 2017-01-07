@@ -12,7 +12,7 @@
 export WEB_DEBUG=False
 export WEB_SECRET_KEY="rD3!Z9jkj8kD"
 
-export MYSQL_MYSQL_HOST=briccsdb
+export MYSQL_MYSQL_HOST=uhlbriccsdb02
 export MYSQL_MYSQL_DATABASE=genvasc_gp_portal
 export MYSQL_MYSQL_USER=gp_portal_user
 export MYSQL_MYSQL_PASSWORD=oiuuoihgiug
