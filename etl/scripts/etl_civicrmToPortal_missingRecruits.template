@@ -4,7 +4,7 @@ echo "$0 Started: $(date)"
 tmpfile=$(mktemp /tmp/etl_missing_recruits.XXXXXX)
 
 # Extract data
-envsubst < /scripts/sql/etl_civicrm_missingRecruits.sql | mysql  -h $CIVICRM_MYSQL_HOST -u $CIVICRM_MYSQL_USER -p$CIVICRM_MYSQL_PASSWORD $CIVICRM_MYSQL_DATABASE > $tmpfile
+envsubst < /scripts/sql/etl_civicrm_missingRecruits.sql | mysql  -h $CIVI_CIVIDB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $CIVI_DRUPALDB_NAME > $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "$0 failed extracting data"
@@ -13,7 +13,7 @@ if [ $? -ne 0 ]; then
 fi
 
 # Import data into table
-mysqlimport -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD --lock-tables --delete --ignore-lines=1 --local $PORTAL_MYSQL_DATABASE $tmpfile
+mysqlimport -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD --lock-tables --delete --ignore-lines=1 --local $GGPP_DB_NAME $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "$0 failed loading data"
@@ -24,7 +24,7 @@ fi
 rm "$tmpfile"
 
 # Register New Practices
-envsubst < /scripts/sql/etl_portal_importMissingRecruits.sql | mysql -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD $PORTAL_MYSQL_DATABASE
+envsubst < /scripts/sql/etl_portal_importMissingRecruits.sql | mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME
 
 if [ $? -ne 0 ]; then
     echo "$0 failed etl_portal_importMissingRecruits"

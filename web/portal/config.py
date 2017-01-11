@@ -1,17 +1,17 @@
 import os
 
 class BaseConfig(object):
-    SECRET_KEY = os.environ['SECRET_KEY']
-    DEBUG = os.environ['DEBUG']
-    DB_HOST = os.environ['MYSQL_HOST']
-    DB_NAME = os.environ['MYSQL_DATABASE']
-    DB_USER = os.environ['MYSQL_USER']
-    DB_PASS = os.environ['MYSQL_PASSWORD']
+    SECRET_KEY = os.environ['GGPP_FLASK_SECRET_KEY']
+    DEBUG = os.environ['GGPP_FLASK_DEBUG']
+    DB_HOST = os.environ['GGPP_DB_HOST']
+    DB_NAME = os.environ['GGPP_DB_NAME']
+    DB_USER = os.environ['GGPP_DB_USER']
+    DB_PASS = os.environ['GGPP_DB_PASSWORD']
     SQLALCHEMY_DATABASE_URI = 'mysql://{0}:{1}@{2}/{3}'.format(
         DB_USER, DB_PASS, DB_HOST, DB_NAME
     )
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO=False
-    SECURITY_PASSWORD_HASH="sha512_crypt"
-    SECURITY_PASSWORD_SALT="z0I4DYEaxE8y"
-    SECURITY_TRACKABLE=True
+    SQLALCHEMY_TRACK_MODIFICATIONS = os.environ['GGPP_SQLALCHEMY_TRACK_MODIFICATIONS']
+    SQLALCHEMY_ECHO=os.environ['GGPP_SQLALCHEMY_ECHO']
+    SECURITY_PASSWORD_HASH=os.environ['GGPP_SECURITY_PASSWORD_HASH']
+    SECURITY_PASSWORD_SALT=os.environ['GGPP_SECURITY_PASSWORD_SALT']
+    SECURITY_TRACKABLE=os.environ['GGPP_SECURITY_TRACKABLE']

@@ -9,7 +9,7 @@ RUN apt-get update && \
 
 ADD scripts /scripts
 
-RUN echo 'alias gpdb="mysql -h $PORTAL_MYSQL_HOST -u $PORTAL_MYSQL_USER -p$PORTAL_MYSQL_PASSWORD $PORTAL_MYSQL_DATABASE"' >> ~/.bashrc
+RUN echo 'alias ggppdb="mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME"' >> ~/.bashrc
 
 RUN { crontab -l ; echo "* * * * * /scripts/etl_redcapToPortal_practiceDetails.sh >> /cron.log 2>&1"; } | crontab -
 RUN { crontab -l ; echo "* * * * * /scripts/etl_portalToCiviCrm_recruitDetails.sh >> /cron.log 2>&1"; } | crontab -

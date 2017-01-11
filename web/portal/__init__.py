@@ -98,5 +98,5 @@ def init_security():
         user_datastore.activate_user(practice_user)
         practice_user.practices.append(practice)
         db.session.commit()
-
+        
 from portal.views import *

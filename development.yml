@@ -24,9 +24,9 @@ services:
     restart: always
     image: mysql:latest
     environment:
-      MYSQL_DATABASE: ${MYSQL_MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_MYSQL_PASSWORD}
-      MYSQL_RANDOM_ROOT_PASSWORD: ${MYSQL_MYSQL_RANDOM_ROOT_PASSWORD}
+      MYSQL_RANDOM_ROOT_PASSWORD: "True"
+      MYSQL_DATABASE: ${GGPP_DB_NAME}
+      MYSQL_USER: ${GGPP_DB_USER}
+      MYSQL_PASSWORD: ${GGPP_DB_PASSWORD}
     expose:
       - "3306"
