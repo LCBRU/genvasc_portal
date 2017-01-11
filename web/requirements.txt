@@ -10,3 +10,4 @@ mysqlclient
 Flask-WTF
 WTForms-Components
 flask-security
+pyyaml
