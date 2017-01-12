@@ -9,7 +9,7 @@ SELECT
     ELSE 'Awaiting Demographics'
     END AS status
    , gen.${CIVI_CUSCOL_GENVASC_ID} AS study_id
-   , con.firat_name AS first_name
+   , con.first_name AS first_name
    , con.last_name AS last_name
    , gr.case_id
    , gr.contact_id
