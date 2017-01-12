@@ -9,6 +9,8 @@ SELECT
     ELSE 'Awaiting Demographics'
     END AS status
    , gen.${CIVI_CUSCOL_GENVASC_ID} AS study_id
+   , con.firat_name AS first_name
+   , con.last_name AS last_name
    , gr.case_id
    , gr.contact_id
    , rel_c.display_name AS processed_by
@@ -18,6 +20,8 @@ LEFT JOIN daps_submission_participant dp ON dp.id = gr.daps_submission_participa
 LEFT JOIN daps_submission ds ON ds.id = dp.daps_submission_id
 LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_case cas ON cas.id = gr.case_id
                                            AND cas.is_deleted = 0
+LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_case_contact cas_con ON cas_con.case_id = cas.case_id
+LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_contact con ON con.id = cas_con.contact_id
 LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_option_value cs ON cs.value = cas.status_id
                                                   AND cs.option_group_id = ${CIVI_CUSID_CASE_STATUS_GROUP}
 LEFT JOIN ${CIVI_CIVIDB_NAME}.${CIVI_CUSTAB_GENVASC_DATA} gen ON gen.entity_id = cas.id
