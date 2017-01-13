@@ -3,10 +3,7 @@ SELECT
    , gr.source_system
    , CASE
     WHEN cs.name IS NOT NULL THEN cs.name
-    WHEN ds.date_returned IS NOT NULL THEN 'Demographics Returned'
-    WHEN ds.date_abandoned IS NOT NULL THEN 'Demographics Abandoned'
-    WHEN ds.date_submitted IS NULL THEN 'Received'
-    ELSE 'Awaiting Demographics'
+    ELSE 'Awaiting processing'
     END AS status
    , gen.${CIVI_CUSCOL_GENVASC_ID} AS study_id
    , con.first_name AS first_name
