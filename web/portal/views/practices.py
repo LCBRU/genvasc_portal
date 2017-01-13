@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_security import login_required, current_user
 from portal import app, db
+from sqlalchemy import or_
 from portal.models import *
 from portal.forms import *
 from portal.helpers import *
@@ -16,7 +17,7 @@ def practices_index():
         q = q.filter(PracticeRegistration.id.in_([p.id for p in current_user.practices]))
 
     if searchForm.search.data:
-        q = q.filter(Practice.name.like("%{0}%".format(searchForm.search.data)))
+        q = q.filter(or_(Practice.name.like("%{0}%".format(searchForm.search.data), Practice.code.like("%{0}%".format(searchForm.search.data)))
 
     registrations = (
         q.order_by(Practice.name.asc())
