@@ -17,7 +17,7 @@ def practices_index():
         q = q.filter(PracticeRegistration.id.in_([p.id for p in current_user.practices]))
 
     if searchForm.search.data:
-        q = q.filter(or_(Practice.name.like("%{0}%".format(searchForm.search.data), Practice.code.like("%{0}%".format(searchForm.search.data))))
+        q = q.filter(or_(Practice.name.like("%{0}%".format(searchForm.search.data), Practice.code.like("%{0}%".format(searchForm.search.data)))))
 
     registrations = (
         q.order_by(Practice.name.asc())
