@@ -136,6 +136,12 @@ class RecruitStatus(db.Model):
     recruit = db.relationship(Recruit, uselist=False, back_populates="status")
     status = db.Column(db.String(100))
     study_id = db.Column(db.String(100))
+    first_name = db.Column(db.String(100))
+    last_name = db.Column(db.String(100))
     processed_by = db.Column(db.String(500))
     processed_date = db.Column(db.Date)
+
+    @property
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
 
