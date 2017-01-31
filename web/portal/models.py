@@ -57,7 +57,7 @@ class User(db.Model, UserMixin):
         return self.has_role(Role.ADMIN_ROLENAME)
 
     def is_system(self):
-        return self.email = 'lcbruit@uhl-tr.nhs.uk'
+        return self.email == 'lcbruit@uhl-tr.nhs.uk'
 
     @property
     def full_name(self):
