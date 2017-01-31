@@ -20,6 +20,11 @@ env | sed 's/^/export /' | cat - /scripts/etl_civicrmToPortal_missingRecruits.te
 chmod 744 /scripts/etl_civicrmToPortal_missingRecruits.sh
 touch /cron.log
 
+# prepend application environment variables to crontab
+env | sed 's/^/export /' | cat - /scripts/etl_civicrm_clearetldata.template > /scripts/etl_civicrmToPortal_missingRecruits.sh
+chmod 744 /scripts/etl_civicrm_clearetldata.sh
+touch /cron.log
+
 # Run cron deamon
 # -m off : sending mail is off 
 # tail makes the output to cron.log viewable with the $(docker logs container_id) command

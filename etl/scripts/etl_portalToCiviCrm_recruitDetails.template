@@ -7,8 +7,9 @@ tmpfile=$(mktemp /tmp/etl_portal_recruits.XXXXXX)
 envsubst < /scripts/sql/etl_portal_recruitDetails.sql | mysql  -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME > $tmpfile
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed extracting data"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!"
+    echo "!!!! $0 failed running etl_portal_recruitDetails"
+    echo "!!!!"
     exit 1
 fi
 
@@ -16,8 +17,9 @@ fi
 mysqlimport -h $CIVI_CIVIDB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD --lock-tables --delete --ignore-lines=1 --local $CIVI_DRUPALDB_NAME $tmpfile
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed loading data"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!"
+    echo "!!!! $0 failed running mysqlimport"
+    echo "!!!!"
     exit 1
 fi
 
@@ -27,8 +29,9 @@ rm "$tmpfile"
 envsubst < /scripts/sql/etl_civicrm_importRecruitDetails.sql | mysql -h $CIVI_CIVIDB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $CIVI_DRUPALDB_NAME
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed registering new practices"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!"
+    echo "!!!! $0 failed running etl_civicrm_importRecruitDetails"
+    echo "!!!!"
     exit 1
 fi
 

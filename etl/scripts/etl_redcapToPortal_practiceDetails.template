@@ -7,8 +7,9 @@ tmpfile=$(mktemp /tmp/etl_practice.XXXXXX)
 envsubst < /scripts/sql/etl_redcap_practiceDetails.sql | mysql  -h $RCINT_DB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $RCINT_DB_NAME > $tmpfile
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed extracting data"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!"
+    echo "!!!! $0 failed running etl_redcap_practiceDetails"
+    echo "!!!!"
     exit 1
 fi
 
@@ -16,19 +17,21 @@ fi
 mysqlimport -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD --lock-tables --delete --ignore-lines=1 --local $GGPP_DB_NAME $tmpfile
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed loading data"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!"
+    echo "!!!! $0 failed running mysqlimport"
+    echo "!!!!"
     exit 1
 fi
 
 rm "$tmpfile"
 
-# Register New Practices
+# Post Import
 envsubst < /scripts/sql/etl_portal_registerNewPracticeDetails.sql | mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME
 
 if [ $? -ne 0 ]; then
-    echo "$0 failed registering new practices"
-    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!!!"
+    echo "!!!! $0 failed running etl_portal_registerNewPracticeDetails"
+    echo "!!!!"
     exit 1
 fi
 

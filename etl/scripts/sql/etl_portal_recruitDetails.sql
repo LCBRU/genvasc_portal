@@ -9,4 +9,5 @@ SELECT
 	, r.civicrm_case_id
 FROM recruit r
 JOIN practice_registration pr ON pr.id = r.practice_registration_id
+WHERE r.source_system = 'PORTAL'
 ;

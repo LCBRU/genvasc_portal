@@ -26,6 +26,8 @@ services:
       - CIVI_CUSID_GENVASC_CASE_TYPE
       - RCINT_DB_HOST
       - RCINT_DB_NAME
+      - CIVI_CUSID_SUBMITTED_FOR_REIMBURSEMENT_ACTIVITY_TYPE
+      - CIVI_CUSID_ACTIVITY_STATUS_GROUP
   web:
     restart: always
     build: ./web
