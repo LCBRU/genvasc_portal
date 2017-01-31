@@ -19,8 +19,8 @@ first_name: "Admin"
 last_name: "User"
 is_admin: True
 ---
-email: "christopher.greengrass@lcbru.nhs.uk"
-password: "admin"
+email: "christopher.greengrass@uhl-tr.nhs.uk"
+password: "cousins"
 first_name: "Chris"
 last_name: "Greengrass"
 practices:
