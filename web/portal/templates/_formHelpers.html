@@ -128,7 +128,7 @@
       {{ searchForm.search(class="form-control") | safe }}
       <div class="input-group-btn">
         <button type="submit" class="btn btn-primary">Search</button>
-        <a class="btn btn-primary" href="{{ url_for(searchview, **kwargs) }}">Clear</a>
+        <a class="btn btn-primary" href="{{ url_for(searchview, **kwargs) }}">Clear Search</a>
 
         {% for key, value in buttons.items() %}
           <a class="btn btn-primary" href="{{ url_for(value, **kwargs) }}">{{ key }}</a>

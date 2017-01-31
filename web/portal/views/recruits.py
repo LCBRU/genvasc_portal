@@ -19,6 +19,7 @@ def recruits_index(code):
     q = Recruit.query.join(PracticeRegistration, Recruit.practice_registration).filter(PracticeRegistration.code == code)
 
     if searchForm.search.data:
+        # TODO
         q = q.filter(Recruit.nhs_number.like("%{}%".format(searchForm.search.data)))
 
     recruits = (
