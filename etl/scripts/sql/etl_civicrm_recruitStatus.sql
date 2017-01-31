@@ -26,11 +26,4 @@ LEFT JOIN ${CIVI_CIVIDB_NAME}.${CIVI_CUSTAB_GENVASC_DATA} gen ON gen.entity_id =
 LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_relationship rel_r ON rel_r.case_id = cas.id
                                   AND rel_r.relationship_type_id = ${CIVI_CUSID_RECRUITER_RELATIONSHIP_TYPE}
 LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_contact rel_c ON rel_c.id = rel_r.contact_id_b
-LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_case_activity cas_act_reimbursement ON cas_act_reimbursement.case_id = cas.id
-LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_activity act_reimbursement ON act_reimbursement.id = cas_act_reimbursement.activity_id
-                                AND act_reimbursement.is_current_revision = 1
-                                AND act_reimbursement.is_deleted = 0
-                                AND act_reimbursement.activity_type_id = ${CIVI_CUSID_SUBMITTED_FOR_REIMBURSEMENT_ACTIVITY_TYPE}
-LEFT JOIN ${CIVI_CIVIDB_NAME}.civicrm_option_value act_reimbursement_status ON act_reimbursement_status.value = act_reimbursement.status_id
-                                AND act_reimbursement_status.option_group_id = ${CIVI_CUSID_ACTIVITY_STATUS_GROUP}
 ;
