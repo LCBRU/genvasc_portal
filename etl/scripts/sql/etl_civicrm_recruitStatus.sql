@@ -1,18 +1,18 @@
   SELECT
        gr.id AS genvasc_port_recruits_id
-     , gr.source_system
+     , gr.source_system COLLATE utf8_unicode_ci
      , CASE
       WHEN cs.name IS NOT NULL THEN cs.name
       ELSE 'Awaiting processing'
-      END AS status
-     , gr.nhs_number
-     , gen.${CIVI_CUSCOL_GENVASC_ID} AS study_id
-     , gr.practice_code
+      END AS status COLLATE utf8_unicode_ci
+     , gr.nhs_number COLLATE utf8_unicode_ci
+     , gen.${CIVI_CUSCOL_GENVASC_ID}
+     , gr.practice_code COLLATE utf8_unicode_ci
      , con.first_name AS first_name
      , con.last_name AS last_name
      , con.birth_date AS date_of_birth
-     , gr.case_id
      , gr.contact_id
+     , gr.case_id
      , rel_c.display_name AS processed_by
      , rel_r.start_date AS processed_date
      , gr.date_recruited
@@ -47,8 +47,8 @@ UNION
      , con.first_name AS first_name
      , con.last_name AS last_name
      , con.birth_date AS date_of_birth
-     , cas.id AS case_id
      , con.id AS contact_id
+     , cas.id AS case_id
      , rel_c.display_name AS processed_by
      , rel_r.start_date AS processed_date
      , cas.start_date AS date_recruited
