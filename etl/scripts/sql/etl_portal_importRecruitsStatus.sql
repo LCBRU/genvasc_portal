@@ -14,7 +14,7 @@ SET
 	, r.civicrm_case_id = e.civicrm_case_id
 ;
 
-DELTE FROM recruit WHERE source_system <> 'PORTAL'
+DELETE FROM recruit WHERE source_system <> 'PORTAL'
 ;
 
 SELECT id FROM user WHERE email = 'lcbruit@uhl-tr.nhs.uk' INTO @system_user_id
