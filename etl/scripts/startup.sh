@@ -16,11 +16,6 @@ chmod 744 /scripts/etl_civicrmToPortal_recruitStatus.sh
 touch /cron.log
 
 # prepend application environment variables to crontab
-env | sed 's/^/export /' | cat - /scripts/etl_civicrmToPortal_missingRecruits.template > /scripts/etl_civicrmToPortal_missingRecruits.sh
-chmod 744 /scripts/etl_civicrmToPortal_missingRecruits.sh
-touch /cron.log
-
-# prepend application environment variables to crontab
 env | sed 's/^/export /' | cat - /scripts/etl_civicrm_clearetldata.template > /scripts/etl_civicrm_clearetldata.sh
 chmod 744 /scripts/etl_civicrm_clearetldata.sh
 touch /cron.log
