@@ -39,4 +39,5 @@ WHERE	e.civicrm_case_id NOT IN (
 	FROM recruit
 	WHERE	civicrm_case_id IS NOT NULL
 )
+	AND e.source_system <> 'PORTAL'
 ;
