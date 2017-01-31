@@ -6,7 +6,7 @@ CREATE TABLE etl_recruit_status (
     ,   study_id VARCHAR(100) NULL
     ,	first_name VARCHAR(100) NULL
     ,	last_name VARCHAR(100) NULL
-    ,   birth_date DATE NULL
+    ,   date_of_birth DATE NULL
     ,	civicrm_contact_id INT NULL
     ,	civicrm_case_id INT NULL
     ,   processed_by VARCHAR(500) NULL
