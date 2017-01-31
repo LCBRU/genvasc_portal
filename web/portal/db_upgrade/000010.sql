@@ -4,6 +4,7 @@ CREATE TABLE etl_recruit_status (
     ,   status VARCHAR(100) NULL
     ,   nhs_number VARCHAR(20) NULL
     ,   study_id VARCHAR(100) NULL
+    ,   practice_code VARCHAR(100) NULL
     ,	first_name VARCHAR(100) NULL
     ,	last_name VARCHAR(100) NULL
     ,   date_of_birth DATE NULL

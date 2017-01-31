@@ -6,7 +6,7 @@
       ELSE 'Awaiting processing'
       END COLLATE utf8_unicode_ci AS status
      , gr.nhs_number COLLATE utf8_unicode_ci AS nhs_number
-     , gen.${CIVI_CUSCOL_GENVASC_ID}
+     , gen.${CIVI_CUSCOL_GENVASC_ID} AS study_id
      , gr.practice_code COLLATE utf8_unicode_ci AS practice_code
      , con.first_name AS first_name
      , con.last_name AS last_name
