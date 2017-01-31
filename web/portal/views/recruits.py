@@ -22,7 +22,7 @@ def recruits_index(code):
         q = q.filter(Recruit.nhs_number.like("%{}%".format(searchForm.search.data)))
 
     recruits = (
-        q.order_by(Recruit.date_created.desc())
+        q.order_by(Recruit.date_recruited.desc())
          .paginate(
             page=searchForm.page.data,
             per_page=10,
