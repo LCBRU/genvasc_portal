@@ -27,8 +27,10 @@
             <dd>{{ r.date_of_birth | date_format }}</dd>
             <dt>Recruited</dt>
             <dd>{{ r.date_recruited | date_format }}</dd>
-            <dt>Recruited By</dt>
-            <dd>{{ r.user.full_name }}</dd>
+            {% is not r.user.is_system %}
+              <dt>Recruited By</dt>
+              <dd>{{ r.user.full_name }}</dd>
+            {% endif %}
         </dl>
         <dl class="inline col-xs-6">
             <dt>Status</dt>

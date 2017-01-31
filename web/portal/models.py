@@ -56,6 +56,9 @@ class User(db.Model, UserMixin):
     def is_admin(self):
         return self.has_role(Role.ADMIN_ROLENAME)
 
+    def is_system(self):
+        return self.email = 'lcbruit@uhl-tr.nhs.uk'
+
     @property
     def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
