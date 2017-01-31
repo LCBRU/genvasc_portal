@@ -27,7 +27,7 @@
             <dd>{{ r.date_of_birth | date_format }}</dd>
             <dt>Recruited</dt>
             <dd>{{ r.date_recruited | date_format }}</dd>
-            {% is not r.user.is_system %}
+            {% if not r.user.is_system %}
               <dt>Recruited By</dt>
               <dd>{{ r.user.full_name }}</dd>
             {% endif %}
