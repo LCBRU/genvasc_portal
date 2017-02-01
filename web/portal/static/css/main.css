@@ -19,3 +19,15 @@ dl.inline {
 	width: auto;
 	display: inline-block;
 }
+
+.login_help {
+	width: 600px;
+	margin: 20px auto;
+	color: #001f3f;
+}
+
+.outer {
+	background-image: url("../img/nihr-logo.png");
+	background-repeat: no-repeat;
+	background-position: right 20px;
+}
