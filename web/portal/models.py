@@ -90,7 +90,7 @@ class StaffMember(db.Model):
         self.date_created = datetime.datetime.now()
 
     def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        return '{} {}'.format(self.first_name or '', self.last_name or '')
 
 class Recruit(db.Model):
 
@@ -146,5 +146,5 @@ class RecruitStatus(db.Model):
 
     @property
     def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+        return '{} {}'.format(self.first_name or '', self.last_name or '')
 
