@@ -5,8 +5,8 @@ SET
     , status = CASE WHEN status = 'NULL' THEN NULL ELSE status END
     , study_id = CASE WHEN study_id = 'NULL' THEN NULL ELSE study_id END
     , processed_by = CASE WHEN processed_by = 'NULL' THEN NULL ELSE processed_by END
-    , first_name = COALESCE(first_name, '')
-    , last_name = COALESCE(last_name, '')
+    , first_name = CASE WHEN first_name = 'NULL' THEN NULL ELSE first_name END
+    , last_name = CASE WHEN last_name = 'NULL' THEN NULL ELSE last_name END
 ;
 
 UPDATE 	recruit r
