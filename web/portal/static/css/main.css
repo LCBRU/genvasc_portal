@@ -33,7 +33,7 @@ dl.inline {
 }
 
 img.screenshot {
-	border: solid 2px #888;
-	margin: 30px auto;
+	border: solid 1px #888;
+	margin: 40px auto;
 	display: block;
 }
