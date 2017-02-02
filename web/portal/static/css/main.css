@@ -31,3 +31,9 @@ dl.inline {
 	background-repeat: no-repeat;
 	background-position: right 20px;
 }
+
+img.screenshot {
+	border: solid 2px #888;
+	margin: 30px auto;
+	display: block;
+}
