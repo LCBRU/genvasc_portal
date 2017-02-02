@@ -58,6 +58,17 @@ class DateMax(object):
         if field.data and field.data > self.max:
             raise ValidationError(self.message)
 
+class NotFuture(object):
+    def __init__(self, message=None):
+        if message:
+            self.message = message
+        else:
+            self.message = "Cannot be after {0:%d/%m/%Y}".format(date.today())
+
+    def __call__(self, form, field):
+        if field.data and field.data > date.today():
+            raise ValidationError(self.message)
+
 class DateMin(object):
     def __init__(self, min, message=None):
         self.min = min
@@ -192,7 +203,7 @@ class PracticeAddForm(FlashingForm):
         Exists(Practice, Practice.code, "Practice does not exist"),
         NotExists(PracticeRegistration, PracticeRegistration.code, "Practice is already registered")
         ])
-    date_initiated = DateField('Date Initiated', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+    date_initiated = DateField('Date Initiated', validators=[NotFuture(), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
     notes = TextAreaField('Notes')    
 
 class PracticeEditForm(FlashingForm):
@@ -200,7 +211,7 @@ class PracticeEditForm(FlashingForm):
         Exists(Practice, Practice.code, "Practice does not exist"),
         Exists(PracticeRegistration, PracticeRegistration.code, "Practice is not registered")
         ])
-    date_initiated = DateField('Date Initiated', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+    date_initiated = DateField('Date Initiated', validators=[NotFuture(), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
     notes = TextAreaField('Notes')    
 
 class StaffMemberForm(WtfForm):
@@ -235,7 +246,7 @@ class RecruitNewForm(FlashingForm):
     date_of_birth_day = SelectField('Date of Birth', choices=days, coerce=int, validators=[ValidSplitDate('date_of_birth_year', 'date_of_birth_month', 'date_of_birth_day'), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)])
     date_of_birth_month = SelectField('Month', choices=months, coerce=int)
     date_of_birth_year = SelectField('Year', choices=years, coerce=int)
-    date_recruited = DateField('Date Recruited', default=datetime.date.today, validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+    date_recruited = DateField('Date Recruited', default=datetime.date.today, validators=[NotFuture(), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
 
     def get_date_of_birth(self):
         return datetime.date(self.date_of_birth_year.data, self.date_of_birth_month.data, self.date_of_birth_day.data)
@@ -255,7 +266,7 @@ class RecruitEditForm(FlashingForm):
     date_of_birth_day = SelectField('Date of Birth', choices=days, coerce=int, validators=[ValidSplitDate('date_of_birth_year', 'date_of_birth_month', 'date_of_birth_day'), MinimumAgeAtRecruitment(40), MaximumAgeAtRecruitment(70)])
     date_of_birth_month = SelectField('Month', choices=months, coerce=int)
     date_of_birth_year = SelectField('Year', choices=years, coerce=int)
-    date_recruited = DateField('Date Recruited', validators=[DateMax(date.today()), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
+    date_recruited = DateField('Date Recruited', validators=[NotFuture(), DateMin(date(2010, 1, 1))], format='%Y-%m-%d')
 
     def get_date_of_birth(self):
         return datetime.date(self.date_of_birth_year.data, self.date_of_birth_month.data, self.date_of_birth_day.data)
