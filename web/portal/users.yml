@@ -25,3 +25,24 @@ first_name: "Chris"
 last_name: "Greengrass"
 practices:
   - K83610
+---
+email: "Samantha.Stemp@nhs.net"
+password: "wrong hand"
+first_name: "Samantha"
+last_name: "Stemp"
+practices:
+  - K83002
+---
+email: "A.Heer@nhs.net"
+password: "late fang"
+first_name: "Amardeep"
+last_name: "Heer"
+practices:
+  - K83002
+---
+email: "Debbie.Lee@nhs.net"
+password: "private guitar"
+first_name: "Debbie"
+last_name: "Lee"
+practices:
+  - K83002
