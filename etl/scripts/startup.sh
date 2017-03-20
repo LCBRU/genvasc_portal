@@ -1,23 +1,17 @@
 #!/usr/bin/env bash
 
+sleep 3m
+
+envsubst < /scripts/sql/etl_civicrm_recruitStatus.template > /scripts/sql/etl_civicrm_recruitStatus.sql
+
 # prepend application environment variables to crontab
 env | sed 's/^/export /' | cat - /scripts/etl_redcapToPortal_practiceDetails.template > /scripts/etl_redcapToPortal_practiceDetails.sh
 chmod 744 /scripts/etl_redcapToPortal_practiceDetails.sh
 touch /cron.log
 
 # prepend application environment variables to crontab
-env | sed 's/^/export /' | cat - /scripts/etl_portalToCiviCrm_recruitDetails.template > /scripts/etl_portalToCiviCrm_recruitDetails.sh
-chmod 744 /scripts/etl_portalToCiviCrm_recruitDetails.sh
-touch /cron.log
-
-# prepend application environment variables to crontab
 env | sed 's/^/export /' | cat - /scripts/etl_civicrmToPortal_recruitStatus.template > /scripts/etl_civicrmToPortal_recruitStatus.sh
 chmod 744 /scripts/etl_civicrmToPortal_recruitStatus.sh
-touch /cron.log
-
-# prepend application environment variables to crontab
-env | sed 's/^/export /' | cat - /scripts/etl_civicrm_clearetldata.template > /scripts/etl_civicrm_clearetldata.sh
-chmod 744 /scripts/etl_civicrm_clearetldata.sh
 touch /cron.log
 
 # Run cron deamon

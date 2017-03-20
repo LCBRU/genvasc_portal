@@ -95,7 +95,6 @@ class StaffMember(db.Model):
 class Recruit(db.Model):
 
     id = db.Column(db.String(50), primary_key=True)
-    source_system = db.Column(db.String(50), nullable=False)
     practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
     practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
@@ -114,7 +113,6 @@ class Recruit(db.Model):
         self.date_recruited = kwargs.get('date_recruited')
         self.date_created = datetime.datetime.now()
         self.id = uuid.uuid1()
-        self.source_system = 'PORTAL'
 
     @property
     def date_of_birth_day(self):
@@ -127,9 +125,6 @@ class Recruit(db.Model):
     @property
     def date_of_birth_year(self):
         return self.date_of_birth.year
-
-    def is_portal_created(self):
-        return self.source_system == 'PORTAL'
 
 class RecruitStatus(db.Model):
 

@@ -9,23 +9,13 @@ SET
     , last_name = CASE WHEN last_name = 'NULL' THEN NULL ELSE last_name END
 ;
 
-UPDATE 	recruit r
-JOIN	etl_recruit_status e ON e.id = r.id
-SET
-	  r.civicrm_contact_id = e.civicrm_case_id
-	, r.civicrm_case_id = e.civicrm_case_id
-;
+DELETE FROM recruit;
 
-DELETE FROM recruit WHERE source_system <> 'PORTAL'
-;
+SELECT id FROM user WHERE email = 'lcbruit@uhl-tr.nhs.uk' INTO @system_user_id;
 
-SELECT id FROM user WHERE email = 'lcbruit@uhl-tr.nhs.uk' INTO @system_user_id
-;
-
-INSERT INTO recruit (id, source_system, practice_registration_id, user_id, nhs_number, date_of_birth, date_recruited, date_created, civicrm_contact_id, civicrm_case_id)
+INSERT INTO recruit (id, practice_registration_id, user_id, nhs_number, date_of_birth, date_recruited, date_created, civicrm_contact_id, civicrm_case_id)
 SELECT
 	  e.id
-	, e.source_system
 	, pr.id
 	, @system_user_id
 	, e.nhs_number
@@ -35,11 +25,5 @@ SELECT
 	, e.civicrm_contact_id
 	, e.civicrm_case_id
 FROM 	etl_recruit_status e
-JOIN	practice_registration pr ON pr.code = e.practice_code
-WHERE	e.civicrm_case_id NOT IN (
-	SELECT 	civicrm_case_id
-	FROM recruit
-	WHERE	civicrm_case_id IS NOT NULL
-)
-	AND e.source_system <> 'PORTAL'
+JOIN	practice_registration pr ON pr.code = TRIM(e.practice_code)
 ;

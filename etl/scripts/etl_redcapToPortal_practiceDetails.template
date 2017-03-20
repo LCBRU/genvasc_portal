@@ -4,7 +4,7 @@ echo "$0 Started: $(date)"
 tmpfile=$(mktemp /tmp/etl_practice.XXXXXX)
 
 # Extract data
-envsubst < /scripts/sql/etl_redcap_practiceDetails.sql | mysql  -h $RCINT_DB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $RCINT_DB_NAME > $tmpfile
+mysql  -h $RCINT_DB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $RCINT_DB_NAME < /scripts/sql/etl_redcap_practiceDetails.sql > $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "!!!!"
@@ -26,7 +26,7 @@ fi
 rm "$tmpfile"
 
 # Post Import
-envsubst < /scripts/sql/etl_portal_registerNewPracticeDetails.sql | mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME
+mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_registerNewPracticeDetails.sql
 
 if [ $? -ne 0 ]; then
     echo "!!!!"

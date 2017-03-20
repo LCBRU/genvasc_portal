@@ -1,6 +1,5 @@
 CREATE TABLE etl_recruit_status (
         id VARCHAR(50) NOT NULL PRIMARY KEY
-    ,	source_system VARCHAR(50) NOT NULL
     ,   status VARCHAR(100) NULL
     ,   nhs_number VARCHAR(20) NULL
     ,   study_id VARCHAR(100) NULL

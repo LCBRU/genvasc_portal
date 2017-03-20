@@ -1,6 +1,5 @@
 CREATE TABLE recruit (
         id VARCHAR(50) PRIMARY KEY NOT NULL
-    ,   source_system VARCHAR(50) NOT NULL
     ,   practice_registration_id INTEGER NOT NULL
     ,   user_id INTEGER NOT NULL
     ,	nhs_number VARCHAR(20) NOT NULL

@@ -4,7 +4,7 @@ echo "$0 Started: $(date)"
 tmpfile=$(mktemp /tmp/etl_recruit_status.XXXXXX)
 
 # Extract data
-envsubst < /scripts/sql/etl_civicrm_recruitStatus.sql | mysql  -h $CIVI_CIVIDB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $CIVI_DRUPALDB_NAME > $tmpfile
+mysql  -h $CIVI_CIVIDB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $CIVI_DRUPALDB_NAME < /scripts/sql/etl_civicrm_recruitStatus.sql > $tmpfile
 
 if [ $? -ne 0 ]; then
     echo "!!!!"
@@ -26,7 +26,7 @@ fi
 rm "$tmpfile"
 
 # Register New Practices
-envsubst < /scripts/sql/etl_portal_importRecruitsStatus.sql | mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME
+mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_importRecruitsStatus.sql
 
 if [ $? -ne 0 ]; then
     echo "!!!!"

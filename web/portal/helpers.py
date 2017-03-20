@@ -61,21 +61,6 @@ def must_exist(model, field, request_field, error_redirect=None, message=u'The v
         return decorated_function
     return decorator
 
-def recruit_is_portal_created(recruit_id_fieldname='id', message=u'Cannot perform this action on a recruit that was not created in the portal'):
-    def decorator(f):
-        @wraps(f)
-        def decorated_function(*args, **kwargs):
-            recruit = Recruit.query.get(request.view_args.get(recruit_id_fieldname))
-
-            if not recruit.is_portal_created():
-                flash("{0}: ({1} = '{2}')".format(message, recruit_id_fieldname, request.view_args.get(recruit_id_fieldname)), 'error')
-                return redirect(redirect_back_url())
-
-            return f(*args, **kwargs)
-
-        return decorated_function
-    return decorator
-
 def redirect_back_url(default='index'):
     return safe_url(request.args.get('next')) or \
            safe_url(request.referrer) or \
