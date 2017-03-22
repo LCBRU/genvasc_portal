@@ -54,7 +54,6 @@ def wait_for_db():
             dbfound = True
         except Exception as e:
             app.logger.warning('Connection string: {}'.format(app.config['SQLALCHEMY_DATABASE_URI']))
-            app.logger.warning('Could not connect to db: {}'.format(e))
 
         time.sleep(5)
 
