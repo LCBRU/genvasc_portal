@@ -49,7 +49,7 @@ def init_db() :
 def wait_for_db():
     dbfound = False
 
-    db.engine.execute("SELECT 1;")
+    db.engine.execute("SELECT 1 as x;")
 
 #    while not dbfound:
 #        try:
