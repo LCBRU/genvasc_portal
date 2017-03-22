@@ -45,6 +45,8 @@ services:
       - GGPP_SECURITY_PASSWORD_HASH
       - GGPP_SECURITY_PASSWORD_SALT
       - GGPP_SECURITY_TRACKABLE
+      - LCBRUIT_EMAIL_ADDRESS
+      - ADMIN_EMAIL_ADDRESS
     volumes:
       - /usr/src/app/portal/static
     command: /usr/local/bin/gunicorn --config gunicorn.conf -w 2 -b :8000 app:app
