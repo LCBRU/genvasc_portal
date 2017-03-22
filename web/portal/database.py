@@ -52,8 +52,8 @@ def wait_for_db():
         try:
             db.engine.execute("SELECT 1;")
             dbfound = True
-        except:
-            app.logger.warning('Could not connect to db')
+        except Exception as e:
+            app.logger.warning('Could not connect to db: ', e)
 
         time.sleep(5)
 
