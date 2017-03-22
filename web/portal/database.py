@@ -13,6 +13,7 @@ lock = Lock()
 
 def init_db() :
     app.logger.info('initialising DB')
+    app.logger.info('Connection string: {}'.format(app.config['SQLALCHEMY_DATABASE_URI']))
 
     wait_for_db()
 
@@ -53,7 +54,7 @@ def wait_for_db():
             db.engine.execute("SELECT 1;")
             dbfound = True
         except Exception as e:
-            app.logger.warning('Connection string: {}'.format(app.config['SQLALCHEMY_DATABASE_URI']))
+            app.logger.warning('Could not connect to db: {}'.format(str(e)))
 
         time.sleep(5)
 
