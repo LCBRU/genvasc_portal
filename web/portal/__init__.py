@@ -53,7 +53,7 @@ if not app.debug:
     import logging
     from logging.handlers import SMTPHandler
     mail_handler = SMTPHandler(app.config['SMTP_SERVER'],
-                               app.config['APPLICATION_EMAIL_ADDRESSES'],
+                               app.config['APPLICATION_EMAIL_ADDRESS'],
                                app.config['ADMIN_EMAIL_ADDRESSES'],
                                app.config['ERROR_EMAIL_SUBJECT'])
     mail_handler.setLevel(logging.ERROR)
