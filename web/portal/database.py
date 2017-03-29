@@ -49,13 +49,11 @@ def init_db() :
 def wait_for_db():
     dbfound = False
 
-    db.engine.execute("SELECT 1 as x;")
+    while not dbfound:
+        try:
+            dbfound = True
+        except Exception as e:
+            app.logger.warning('Could not connect to db: {}'.format(str(e)))
 
-#    while not dbfound:
-#        try:
-#            dbfound = True
-#        except Exception as e:
-#            app.logger.warning('Could not connect to db: {}'.format(str(e)))
-#
-#        time.sleep(5)
+        time.sleep(5)
 

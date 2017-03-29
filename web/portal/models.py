@@ -138,8 +138,15 @@ class RecruitStatus(db.Model):
     last_name = db.Column(db.String(100))
     processed_by = db.Column(db.String(500))
     processed_date = db.Column(db.Date)
+    invoice_year = db.Column(db.String(50))
+    invoice_quarter = db.Column(db.String(50))
+    reimbursed_status = db.Column(db.String(50))
 
     @property
     def full_name(self):
         return '{} {}'.format(self.first_name or '', self.last_name or '')
+
+    @property
+    def invoice_period(self):
+        return '{} {}'.format(self.invoice_year or '', self.invoice_quarter or '')
 

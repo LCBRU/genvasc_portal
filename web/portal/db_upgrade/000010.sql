@@ -12,5 +12,8 @@ CREATE TABLE etl_recruit_status (
     ,   processed_by VARCHAR(500) NULL
     ,   processed_date DATE NULL
     ,   date_recruited DATE NULL
+    ,   invoice_year VARCHAR(50) NULL
+    ,   invoice_quarter VARCHAR(50) NULL
+    ,   reimbursed_status VARCHAR(50) NULL
     )
 ;
