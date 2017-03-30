@@ -7,6 +7,9 @@ SET
     , processed_by = CASE WHEN processed_by = 'NULL' THEN NULL ELSE processed_by END
     , first_name = CASE WHEN first_name = 'NULL' THEN NULL ELSE first_name END
     , last_name = CASE WHEN last_name = 'NULL' THEN NULL ELSE last_name END
+    , invoice_year = CASE WHEN invoice_year = 'NULL' THEN NULL ELSE invoice_year END
+    , invoice_quarter = CASE WHEN invoice_quarter = 'NULL' THEN NULL ELSE invoice_quarter END
+    , reimbursed_status = CASE WHEN reimbursed_status = 'NULL' THEN NULL ELSE reimbursed_status END
 ;
 
 DELETE FROM recruit;
