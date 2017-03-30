@@ -68,11 +68,13 @@ UNION
   JOIN ', @CIVI_DB, '.', @SUBJECT_TABLE, ' cids ON cids.entity_id = con.id
   JOIN ', @CIVI_DB, '.civicrm_relationship practiceRel ON practiceRel.case_id = cas.id
                             AND practiceRel.relationship_type_id = ', @RECRUITING_SITE_RELATIONSHIP_TYPE, '
+                            AND practiceRel.is_active = 1
   JOIN ', @CIVI_DB, '.', @PRACTICE_TABLE, ' gpCustom ON gpCustom.entity_id = practiceRel.contact_id_b
   LEFT JOIN ', @CIVI_DB, '.', @GENVASC_TABLE, ' gen ON gen.entity_id = cas.id
   LEFT JOIN genvasc_portal_recruits gpr ON gpr.case_id = cas.id
   LEFT JOIN ', @CIVI_DB, '.civicrm_relationship rel_r ON rel_r.case_id = cas.id
                                     AND rel_r.relationship_type_id = ', @RECRUITER_RELATIONSHIP_TYPE, ' 
+                                    AND rel_r.is_active = 1
   LEFT JOIN ', @CIVI_DB, '.civicrm_contact rel_c ON rel_c.id = rel_r.contact_id_b
   LEFT JOIN ', @CIVI_DB, '.',@INVOICE_TABLE , ' inv ON inv.entity_id = cas.id
   WHERE cas.case_type_id = ', @GENVASC_CASE_TYPE, '
