@@ -11,6 +11,9 @@
   <li role="presentation" {% if tab == 'recruits' %}class="active"{% endif %}>
     <a href="{{ url_for('recruits_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-heart-empty" aria-hidden="true"> Recruits</span></a>
   </li>
+  <li role="presentation" {% if tab == 'reimbursements' %}class="active"{% endif %}>
+    <a href="{{ url_for('reimbursements_index', code=practice_registration.code) }}"><span class="glyphicon glyphicon-gbp" aria-hidden="true"> Reimbursements</span></a>
+  </li>
 </ul>
 
 {% block practice_content %}{% endblock %}

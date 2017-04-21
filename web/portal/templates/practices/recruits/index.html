@@ -34,7 +34,7 @@
             <dd>{{ r.status.processed_date | date_format }}</dd>
             <dt>Invoice</dt>
             <dd>{{ r.status.invoice_period | default_if_none('Not Invoiced') }}</dd>
-            <dt>Reimbursed</dt>
+            <dt>Submitted for Reimbursement</dt>
             <dd>{{ r.status.reimbursed_status | blank_if_none }}</dd>
         </dl>
       </div>

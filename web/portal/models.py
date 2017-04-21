@@ -8,6 +8,8 @@ class Practice(db.Model):
 
     code = db.Column(db.String, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    ccg_name = db.Column(db.String, nullable=True)
+    address = db.Column(db.String, nullable=True)
 
 class Role(db.Model, RoleMixin):
     ADMIN_ROLENAME = 'admin'

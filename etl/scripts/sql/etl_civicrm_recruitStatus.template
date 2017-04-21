@@ -17,7 +17,7 @@ SET @INVOICE_GROUP_ID := (SELECT id FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_grou
 SET @INVOICE_TABLE := (SELECT table_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_group WHERE id = @INVOICE_GROUP_ID);
 SET @INVOICE_YEAR_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_field WHERE custom_group_id = @INVOICE_GROUP_ID AND name = 'CIVI_FIELD_GENVASC_INVOICE_YEAR');
 SET @INVOICE_QUARTER_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_field WHERE custom_group_id = @INVOICE_GROUP_ID AND name = 'CIVI_FIELD_GENVASC_INVOICE_QUARTER');
-SET @INVOICE_REIMBURSED_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_field WHERE custom_group_id = @INVOICE_GROUP_ID AND name = 'CIVI_FIELD_GENVASC_INVOICE_REIMBURSED');
+SET @INVOICE_REIMBURSED_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_field WHERE custom_group_id = @INVOICE_GROUP_ID AND name = 'CIVI_FIELD_GENVASC_INVOICE_REIMBURSED_STATUS');
 
 SET @s = CONCAT('
   SELECT
@@ -80,7 +80,6 @@ UNION
   WHERE cas.case_type_id = ', @GENVASC_CASE_TYPE, '
       AND LENGTH(TRIM(COALESCE(cids.', @NHS_NUMBER_COL, ', \'\'))) > 0
       AND con.birth_date IS NOT NULL
-      AND gpr.case_id IS NULL
 ;');
 
 PREPARE q FROM @s;

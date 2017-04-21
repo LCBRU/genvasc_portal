@@ -56,4 +56,3 @@ def wait_for_db():
             app.logger.warning('Could not connect to db: {}'.format(str(e)))
 
         time.sleep(5)
-

@@ -7,12 +7,14 @@ import uuid
 
 from portal.models import *
 
+
 @app.template_filter('datetime_format')
 def datetime_format(value):
     if value:
         return value.strftime('%c')
     else:
         return ''
+
 
 @app.template_filter('date_format')
 def date_format(value):
@@ -21,13 +23,24 @@ def date_format(value):
     else:
         return ''
 
+
 @app.template_filter('blank_if_none')
 def blank_if_none(value):
     return value or ''
 
+
 @app.template_filter('default_if_none')
 def default_if_none(value, default):
     return value or default
+
+
+@app.template_filter('currency')
+def currency(value):
+    if value:
+        return '£{:.2f}'.format(value)
+    else:
+        return ''
+
 
 def templated(template=None):
     def decorator(f):
@@ -46,6 +59,7 @@ def templated(template=None):
         return decorated_function
     return decorator
 
+
 def must_exist(model, field, request_field, error_redirect=None, message=u'The value does not exist'):
     def decorator(f):
         @wraps(f)
@@ -61,10 +75,12 @@ def must_exist(model, field, request_field, error_redirect=None, message=u'The v
         return decorated_function
     return decorator
 
+
 def redirect_back_url(default='index'):
     return safe_url(request.args.get('next')) or \
            safe_url(request.referrer) or \
            url_for(default)
+
 
 def safe_url(target):
     ref_url = urlparse(request.host_url)
