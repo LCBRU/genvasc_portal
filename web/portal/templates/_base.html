@@ -17,6 +17,9 @@
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ url_for('site_file_documentation') }}">Site File Documentation</a></li>
+          {% if current_user.is_admin() %}
+            <li><a href="{{ url_for('site_file_documentation_study_admin') }}">Study Admin Team</a></li>
+          {% endif %}
           <li><a href="{{ url_for('practices_index') }}">Practices</a></li>
 
           {% if current_user.is_admin() %}
