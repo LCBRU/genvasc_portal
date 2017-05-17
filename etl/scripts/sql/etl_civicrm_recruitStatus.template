@@ -19,6 +19,9 @@ SET @INVOICE_YEAR_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_cu
 SET @INVOICE_QUARTER_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_field WHERE custom_group_id = @INVOICE_GROUP_ID AND name = 'CIVI_FIELD_GENVASC_INVOICE_QUARTER');
 SET @INVOICE_REIMBURSED_COL := (SELECT column_name FROM ${CIVI_CIVIDB_NAME}.civicrm_custom_field WHERE custom_group_id = @INVOICE_GROUP_ID AND name = 'CIVI_FIELD_GENVASC_INVOICE_REIMBURSED_STATUS');
 
+SET @RIGHT_NOW=CURDATE();
+
+
 SET @s = CONCAT('
   SELECT
        gr.id AS genvasc_port_recruits_id
@@ -62,19 +65,23 @@ UNION
      , inv.', @INVOICE_REIMBURSED_COL , ' AS reimbursed_status
   FROM ', @CIVI_DB, '.civicrm_case cas
   LEFT JOIN ', @CIVI_DB, '.civicrm_option_value cs ON cs.value = cas.status_id
-                            AND cs.option_group_id = ', @CASE_STATUS_GROUP_ID, '
+        AND cs.option_group_id = ', @CASE_STATUS_GROUP_ID, '
   JOIN ', @CIVI_DB, '.civicrm_case_contact cc ON cc.case_id = cas.id
   JOIN ', @CIVI_DB, '.civicrm_contact con ON con.id = cc.contact_id 
   JOIN ', @CIVI_DB, '.', @SUBJECT_TABLE, ' cids ON cids.entity_id = con.id
   JOIN ', @CIVI_DB, '.civicrm_relationship practiceRel ON practiceRel.case_id = cas.id
-                            AND practiceRel.relationship_type_id = ', @RECRUITING_SITE_RELATIONSHIP_TYPE, '
-                            AND practiceRel.is_active = 1
+        AND practiceRel.relationship_type_id = ', @RECRUITING_SITE_RELATIONSHIP_TYPE, '
+        AND practiceRel.is_active = 1
+        AND ( practiceRel.end_date IS NULL OR practiceRel.end_date >= @RIGHT_NOW)
+        AND ( practiceRel.start_date IS NULL OR practiceRel.start_date <= @RIGHT_NOW)
   JOIN ', @CIVI_DB, '.', @PRACTICE_TABLE, ' gpCustom ON gpCustom.entity_id = practiceRel.contact_id_b
   LEFT JOIN ', @CIVI_DB, '.', @GENVASC_TABLE, ' gen ON gen.entity_id = cas.id
   LEFT JOIN genvasc_portal_recruits gpr ON gpr.case_id = cas.id
   LEFT JOIN ', @CIVI_DB, '.civicrm_relationship rel_r ON rel_r.case_id = cas.id
-                                    AND rel_r.relationship_type_id = ', @RECRUITER_RELATIONSHIP_TYPE, ' 
-                                    AND rel_r.is_active = 1
+        AND rel_r.relationship_type_id = ', @RECRUITER_RELATIONSHIP_TYPE, ' 
+        AND rel_r.is_active = 1
+        AND ( rel_r.end_date IS NULL OR rel_r.end_date >= @RIGHT_NOW)
+        AND ( rel_r.start_date IS NULL OR rel_r.start_date <= @RIGHT_NOW)
   LEFT JOIN ', @CIVI_DB, '.civicrm_contact rel_c ON rel_c.id = rel_r.contact_id_b
   LEFT JOIN ', @CIVI_DB, '.',@INVOICE_TABLE , ' inv ON inv.entity_id = cas.id
   WHERE cas.case_type_id = ', @GENVASC_CASE_TYPE, '
