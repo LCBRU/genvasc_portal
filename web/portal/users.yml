@@ -25,3 +25,9 @@ first_name: "Chris"
 last_name: "Greengrass"
 practices:
   - K83610
+---
+email: "richard.a.bramley@uhl-tr.nhs.uk"
+password: "password"
+first_name: "Richard"
+last_name: "Bramley"
+is_admin: True

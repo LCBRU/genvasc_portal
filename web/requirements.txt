@@ -13,3 +13,4 @@ flask-security
 pyyaml
 weasyprint
 Flask-WeasyPrint
+flask_mail

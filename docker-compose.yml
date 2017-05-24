@@ -47,6 +47,7 @@ services:
       - GGPP_SECURITY_TRACKABLE
       - LCBRUIT_EMAIL_ADDRESS
       - ADMIN_EMAIL_ADDRESS
+      - MAIL_SERVER
     volumes:
       - /usr/src/app/portal/static
       - ./web/portal:/usr/src/app/portal

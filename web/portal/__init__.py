@@ -5,11 +5,13 @@ from flask_wtf.csrf import CsrfProtect
 from flask_security import Security, SQLAlchemyUserDatastore
 import logging
 import traceback
+from flask_mail import Mail
+
 
 class ReverseProxied(object):
-    '''Wrap the application in this middleware and configure the 
-    front-end server to add these headers, to let you quietly bind 
-    this to a URL other than / and to an HTTP scheme that is 
+    '''Wrap the application in this middleware and configure the
+    front-end server to add these headers, to let you quietly bind
+    this to a URL other than / and to an HTTP scheme that is
     different than what is used locally.
 
     In nginx:
@@ -40,14 +42,17 @@ class ReverseProxied(object):
 
         server = environ.get('HTTP_X_FORWARDED_SERVER', '')
         if server:
-          environ['HTTP_HOST'] = server
+            environ['HTTP_HOST'] = server
 
         return self.app(environ, start_response)
+
 
 app = Flask(__name__)
 app.wsgi_app = ReverseProxied(app.wsgi_app)
 app.config.from_object(BaseConfig)
 CsrfProtect(app)
+mail = Mail(app)
+
 
 if not app.debug:
     import logging
@@ -59,12 +64,14 @@ if not app.debug:
     mail_handler.setLevel(logging.ERROR)
     app.logger.addHandler(mail_handler)
 
+
 @app.errorhandler(500)
 @app.errorhandler(Exception)
 def internal_error(exception):
     print(traceback.format_exc())
     app.logger.error(traceback.format_exc())
     return render_template('500.html'), 500
+
 
 # Set up database
 db = SQLAlchemy(app)
