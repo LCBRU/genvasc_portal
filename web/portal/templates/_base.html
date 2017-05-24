@@ -14,36 +14,39 @@
         </button>
         <a class="navbar-brand" href="{{ url_for('index') }}">GENVASC GP Portal</a>
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                  <li><a href="{{ url_for('site_file_documentation') }}">Site File Documentation</a></li>
-                  {% if current_user.is_admin() %}
-                    <li><a href="{{ url_for('site_file_documentation_study_admin') }}">Study Admin Team</a></li>
-                  {% endif %}
-                  <li role="separator" class="divider"></li>
-                  <li><a href="{{ url_for('help') }}">Help</a></li>
-              </ul>
-          </li>
 
-          <li><a href="{{ url_for('practices_index') }}">Practices</a></li>
+     {% if current_user.is_active %}
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                      <li><a href="{{ url_for('site_file_documentation') }}">Site File Documentation</a></li>
+                      {% if current_user.is_admin() %}
+                        <li><a href="{{ url_for('site_file_documentation_study_admin') }}">Study Admin Team</a></li>
+                      {% endif %}
+                      <li role="separator" class="divider"></li>
+                      <li><a href="{{ url_for('help') }}">Help</a></li>
+                  </ul>
+              </li>
 
-          {% if current_user.is_admin() %}
-            <li><a href="{{ url_for('submissions_index') }}">Submissions</a></li>
-          {% endif %}
+              <li><a href="{{ url_for('practices_index') }}">Practices</a></li>
 
-          <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="{{ url_for('security.change_password') }}">Change Password</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="{{ url_for('users_logout') }}">Log Out</a></li>
-              </ul>
-          </li>
-        </ul>
-      </div>
+              {% if current_user.is_admin() %}
+                <li><a href="{{ url_for('submissions_index') }}">Submissions</a></li>
+              {% endif %}
+
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('security.change_password') }}">Change Password</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="{{ url_for('users_logout') }}">Log Out</a></li>
+                  </ul>
+              </li>
+            </ul>
+          </div>
+      {% endif %}
     </div>
   </nav>
 
