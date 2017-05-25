@@ -26,3 +26,4 @@ class BaseConfig(object):
     ADMIN_EMAIL_ADDRESSES = os.environ['ADMIN_EMAIL_ADDRESS']
     ERROR_EMAIL_SUBJECT = 'GENVASC Portal Error'
     SECURITY_CHANGEABLE = True
+    SECURITY_RECOVERABLE = True

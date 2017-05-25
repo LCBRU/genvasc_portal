@@ -21,7 +21,8 @@
 			</div>
 			{{ render_field(login_user_form.next) }}
 			<div class="col-sm-6 col-sm-offset-3 text-right">
-				{{ render_field(login_user_form.submit) }}
+                <a href="{{ url_for('security.forgot_password') }}" class="btn btn-info" role="button">First Login or Forgotten Password</a>
+                <button type="submit" class="btn btn-primary">Login</button>
 			</div>
 		</form>
   </div>
