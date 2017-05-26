@@ -1,12 +1,10 @@
 ---
 email: "lcbruit@uhl-tr.nhs.uk"
-password: "mHmh7kAXxyeei50QG7bd"
 first_name: "System"
 last_name: "User"
 inactive: True
 ---
 email: "user@practice.nhs.uk"
-password: "practice"
 first_name: "Practice"
 last_name: "user"
 practices:
@@ -14,20 +12,17 @@ practices:
   - "C82062"
 ---
 email: "admin@lcbru.nhs.uk"
-password: "admin"
 first_name: "Admin"
 last_name: "User"
 is_admin: True
 ---
 email: "christopher.greengrass@uhl-tr.nhs.uk"
-password: "cousins"
 first_name: "Chris"
 last_name: "Greengrass"
 practices:
   - K83610
 ---
 email: "richard.a.bramley@uhl-tr.nhs.uk"
-password: "password"
 first_name: "Richard"
 last_name: "Bramley"
 is_admin: True
