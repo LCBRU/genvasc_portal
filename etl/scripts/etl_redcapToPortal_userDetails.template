@@ -1,0 +1,39 @@
+
+echo "$0 Started: $(date)"
+
+tmpfile=$(mktemp /tmp/etl_user.XXXXXX)
+
+# Extract data
+mysql  -h $RCINT_DB_HOST -u $GGPP_ETL_USER -p$GGPP_ETL_PASSWORD $RCINT_DB_NAME < /scripts/sql/etl_redcap_userDetails.sql > $tmpfile
+
+if [ $? -ne 0 ]; then
+    echo "!!!!"
+    echo "!!!! $0 failed running etl_redcap_userDetails"
+    echo "!!!!"
+    exit 1
+fi
+
+# Import data into table
+mysqlimport -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD --lock-tables --delete --ignore-lines=1 --local $GGPP_DB_NAME $tmpfile
+
+if [ $? -ne 0 ]; then
+    echo "!!!!"
+    echo "!!!! $0 failed running mysqlimport"
+    echo "!!!!"
+    exit 1
+fi
+
+rm "$tmpfile"
+
+# Post Import
+mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_registerUserDetails.sql
+
+if [ $? -ne 0 ]; then
+    echo "!!!!"
+    echo "!!!! $0 failed running etl_portal_registerUserDetails"
+    echo "!!!!"
+    exit 1
+fi
+
+echo "$0 Completed: $(date)"
+echo "------------------------------------"
