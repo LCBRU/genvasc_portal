@@ -14,7 +14,9 @@ if [ $? -ne 0 ]; then
 fi
 
 # Import data into table
-mysqlimport -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD --lock-tables --delete --ignore-lines=1 --local $GGPP_DB_NAME $tmpfile
+# mysqlimport -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD --lock-tables --delete --ignore-lines=1 --local $GGPP_DB_NAME $tmpfile
+COLLIST=`head -1 $table.csv`
+mysql --execute="LOAD DATA INFILE '$tmpfile' INTO TABLE etl_user FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' IGNORE 1 LINES ($COLLIST); SHOW WARNINGS"
 
 if [ $? -ne 0 ]; then
     echo "!!!!"
