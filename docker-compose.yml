@@ -28,6 +28,7 @@ services:
       - RCINT_DB_NAME
       - CIVI_CUSID_SUBMITTED_FOR_REIMBURSEMENT_ACTIVITY_TYPE
       - CIVI_CUSID_ACTIVITY_STATUS_GROUP
+      - ADMIN_EMAIL_ADDRESS
   web:
     restart: always
     build: ./web
