@@ -35,12 +35,16 @@ rm "$tmpfile"
 rm "$warningsfile"
 
 # Register New Practices
-mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_importRecruitsStatus.sql
+errorsfile='/tmp/etl_recruit_status.errors'
+mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_importRecruitsStatus.sql 2> $errorsfile
 
 if [ $? -ne 0 ]; then
-    log_error "Export Failed" "failed running etl_portal_importRecruitsStatus"
+    errors=`cat $errorsfile`
+    log_error "Failed running etl_portal_importRecruitsStatus" "$errors"
     exit 1
 fi
+
+rm "$errorsfile"
 
 echo "$0 Completed: $(date)"
 echo "------------------------------------"
