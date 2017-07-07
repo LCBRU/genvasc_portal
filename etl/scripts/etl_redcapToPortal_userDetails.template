@@ -36,7 +36,7 @@ rm "$warningsfile"
 
 # Post Import
 errorsfile='/tmp/etl_user.errors'
-mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_registerUserDetails.sql
+mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME < /scripts/sql/etl_portal_registerUserDetails.sql 2> $errorsfile 
 
 if [ $? -ne 0 ]; then
     errors=`cat $errorsfile`
