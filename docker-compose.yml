@@ -65,6 +65,6 @@ services:
     ports:
       - "80:80"
     volumes_from:
-      - web:ro
+      - web:rw
     links:
       - web:web
