@@ -53,18 +53,3 @@ services:
       - /usr/src/app/portal/static
       - ./web/portal:/usr/src/app/portal
     command: /usr/local/bin/gunicorn --config gunicorn.conf -w 2 -b :8000 app:app
-
-  nginx:
-    restart: always
-    build:
-      context: ./nginx/
-      args:
-        deployment_environment: development
-    depends_on:
-      - web
-    ports:
-      - "80:80"
-    volumes_from:
-      - web:rw
-    links:
-      - web:web
