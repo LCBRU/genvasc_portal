@@ -53,3 +53,5 @@ services:
       - /usr/src/app/portal/static
       - ./web/portal:/usr/src/app/portal
     command: /usr/local/bin/gunicorn --config gunicorn.conf -w 2 -b :8000 app:app
+    ports:
+      - "8000:8000"
