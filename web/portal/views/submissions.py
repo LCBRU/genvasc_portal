@@ -112,6 +112,8 @@ def submissions_csv(invoice_year, invoice_quarter):
         RecruitStatus.invoice_year == invoice_year
     ).filter(
         RecruitStatus.invoice_quarter == invoice_quarter
+    ).filter(
+        RecruitStatus.status != 'Excluded'
     )
 
     participants = q.order_by(
