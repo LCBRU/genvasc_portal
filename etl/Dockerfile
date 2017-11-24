@@ -15,7 +15,7 @@ RUN echo 'mailhub=smtp.xuhl-tr.nhs.uk' >> /etc/ssmtp/ssmtp.conf
 
 RUN echo 'alias ggppdb="mysql -h $GGPP_DB_HOST -u $GGPP_DB_USER -p$GGPP_DB_PASSWORD $GGPP_DB_NAME"' >> ~/.bashrc
 
-RUN { crontab -l ; echo "50 23 * * * bash /scripts/etl_redcapToPortal_practiceDetails.sh >> /cron.log 2>&1"; } | crontab -
+RUN { crontab -l ; echo "* * * * * bash /scripts/etl_redcapToPortal_practiceDetails.sh >> /cron.log 2>&1"; } | crontab -
 RUN { crontab -l ; echo "* * * * * bash /scripts/etl_redcapToPortal_userDetails.sh >> /cron.log 2>&1"; } | crontab -
 RUN { crontab -l ; echo "* * * * * bash /scripts/etl_civicrmToPortal_recruitStatus.sh >> /cron.log 2>&1"; } | crontab -
 

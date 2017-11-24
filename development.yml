@@ -38,3 +38,5 @@ services:
       MYSQL_PASSWORD: ${GGPP_DB_PASSWORD}
     expose:
       - "3306"
+    ports:
+      - "3306:3306"

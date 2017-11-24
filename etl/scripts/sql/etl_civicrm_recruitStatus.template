@@ -43,6 +43,8 @@ SET @s = CONCAT('
   FROM genvasc_portal_recruits gr
   JOIN ', @CIVI_DB, '.', @PRACTICE_TABLE, ' gpCustom ON gpCustom.entity_id = gr.practice_id
   WHERE gr.case_id IS NULL
+      AND gr.delete_reason IS NULL
+      AND gr.date_processed IS NULL
 
 UNION
 
