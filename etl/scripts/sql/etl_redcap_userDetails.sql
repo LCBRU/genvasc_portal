@@ -10,6 +10,7 @@ WHERE d.project_id IN (29, 53)
     AND d.field_name IN (
         'practice_manager_email',
         'sen_part_email',
-        'contact_email_add'
+        'contact_email_add',
+        'pi_email_add'
     )
 ;
