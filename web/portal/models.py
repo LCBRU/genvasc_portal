@@ -12,6 +12,9 @@ class Practice(db.Model):
     name = db.Column(db.String, nullable=False)
     ccg_name = db.Column(db.String, nullable=True)
     address = db.Column(db.String, nullable=True)
+    delegates = db.relationship(
+        "Delegate",
+        back_populates="practice")
 
 
 class Role(db.Model, RoleMixin):
@@ -194,3 +197,26 @@ class RecruitStatus(db.Model):
         return '{} {}'.format(
             self.invoice_year or '',
             self.invoice_quarter or '')
+
+
+class Delegate(db.Model):
+
+    __tablename__ = 'etl_delegationLog'
+
+    practice_code = db.Column(
+        db.String,
+        db.ForeignKey(Practice.code),
+        primary_key=True)
+    practice = db.relationship(Practice, back_populates="delegates")
+    instance = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(500))
+    role = db.Column(db.String(500))
+    gcp_training = db.Column(db.Boolean)
+    gv_trained = db.Column(db.Boolean)
+    on_delegation_log_yn = db.Column(db.Boolean)
+    gv_start_del_log = db.Column(db.Date)
+    gv_end_del_log = db.Column(db.Date)
+    gv_phone_a = db.Column(db.String(100))
+    gv_phone_b = db.Column(db.String(100))
+    contact_email_add = db.Column(db.String(500))
+    primary_contact_yn = db.Column(db.Boolean)

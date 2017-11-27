@@ -12,6 +12,7 @@ CREATE TABLE etl_delegationLog (
     gv_phone_a VARCHAR(100),
     gv_phone_b VARCHAR(100),
     contact_email_add VARCHAR(500),
-    primary_contact_yn BOOLEAN
+    primary_contact_yn BOOLEAN,
+    PRIMARY KEY (practice_code, instance)
 )
 ;
