@@ -1,6 +1,8 @@
-import datetime, uuid
+import datetime
+import uuid
 from portal import db
 from flask_security import UserMixin, RoleMixin
+
 
 class Practice(db.Model):
 
@@ -10,6 +12,7 @@ class Practice(db.Model):
     name = db.Column(db.String, nullable=False)
     ccg_name = db.Column(db.String, nullable=True)
     address = db.Column(db.String, nullable=True)
+
 
 class Role(db.Model, RoleMixin):
     ADMIN_ROLENAME = 'admin'
@@ -22,13 +25,30 @@ class Role(db.Model, RoleMixin):
         self.name = kwargs.get('name')
         self.description = kwargs.get('description')
 
-roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
-practice_registrations_users = db.Table('practice_registrations_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
-        db.Column('practice_registration_id', db.Integer(), db.ForeignKey('practice_registration.id')))
+roles_users = db.Table(
+    'roles_users',
+    db.Column(
+        'user_id',
+        db.Integer(),
+        db.ForeignKey('user.id')),
+    db.Column(
+        'role_id',
+        db.Integer(),
+        db.ForeignKey('role.id')))
+
+
+practice_registrations_users = db.Table(
+    'practice_registrations_users',
+    db.Column(
+        'user_id',
+        db.Integer(),
+        db.ForeignKey('user.id')),
+    db.Column(
+        'practice_registration_id',
+        db.Integer(),
+        db.ForeignKey('practice_registration.id')))
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -43,10 +63,14 @@ class User(db.Model, UserMixin):
     last_login_ip = db.Column(db.String(50))
     current_login_ip = db.Column(db.String(50))
     login_count = db.Column(db.Integer())
-    roles = db.relationship('Role', secondary=roles_users,
-                            backref=db.backref('users', lazy='dynamic'))
-    practices = db.relationship('PracticeRegistration', secondary=practice_registrations_users,
-                            backref=db.backref('users', lazy='dynamic'))
+    roles = db.relationship(
+        'Role',
+        secondary=roles_users,
+        backref=db.backref('users', lazy='dynamic'))
+    practices = db.relationship(
+        'PracticeRegistration',
+        secondary=practice_registrations_users,
+        backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, *args, **kwargs):
         self.email = kwargs.get('email')
@@ -65,6 +89,7 @@ class User(db.Model, UserMixin):
     def full_name(self):
         return '{} {}'.format(self.first_name or '', self.last_name or '')
 
+
 class PracticeRegistration(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -76,14 +101,19 @@ class PracticeRegistration(db.Model):
         self.code = kwargs.get('code')
         self.date_created = datetime.datetime.now()
 
+
 class StaffMember(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
-    practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
+    practice_registration_id = db.Column(
+        db.Integer,
+        db.ForeignKey(PracticeRegistration.id))
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False)
-    practice_registration = db.relationship(PracticeRegistration, backref=db.backref('staff', cascade="all, delete-orphan"))
+    practice_registration = db.relationship(
+        PracticeRegistration,
+        backref=db.backref('staff', cascade="all, delete-orphan"))
 
     def __init__(self, *args, **kwargs):
         self.practice_registration_id = kwargs.get('practice_registration').id
@@ -94,18 +124,28 @@ class StaffMember(db.Model):
     def full_name(self):
         return '{} {}'.format(self.first_name or '', self.last_name or '')
 
+
 class Recruit(db.Model):
 
     id = db.Column(db.String(50), primary_key=True)
-    practice_registration_id = db.Column(db.Integer, db.ForeignKey(PracticeRegistration.id))
-    practice_registration = db.relationship(PracticeRegistration, backref=db.backref('recruits', cascade="all, delete-orphan"))
+    practice_registration_id = db.Column(
+        db.Integer,
+        db.ForeignKey(PracticeRegistration.id))
+    practice_registration = db.relationship(
+        PracticeRegistration,
+        backref=db.backref('recruits', cascade="all, delete-orphan"))
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))
-    user = db.relationship(User, backref=db.backref('recruits', cascade="all, delete-orphan"))
+    user = db.relationship(
+        User,
+        backref=db.backref('recruits', cascade="all, delete-orphan"))
     nhs_number = db.Column(db.String(20), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
     date_recruited = db.Column(db.Date, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False)
-    status = db.relationship("RecruitStatus", uselist=False, back_populates="recruit")
+    status = db.relationship(
+        "RecruitStatus",
+        uselist=False,
+        back_populates="recruit")
 
     def __init__(self, *args, **kwargs):
         self.practice_registration_id = kwargs.get('practice_registration').id
@@ -127,6 +167,7 @@ class Recruit(db.Model):
     @property
     def date_of_birth_year(self):
         return self.date_of_birth.year
+
 
 class RecruitStatus(db.Model):
 
@@ -150,5 +191,6 @@ class RecruitStatus(db.Model):
 
     @property
     def invoice_period(self):
-        return '{} {}'.format(self.invoice_year or '', self.invoice_quarter or '')
-
+        return '{} {}'.format(
+            self.invoice_year or '',
+            self.invoice_quarter or '')
