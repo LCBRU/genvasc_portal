@@ -26,3 +26,13 @@ email: "richard.a.bramley@uhl-tr.nhs.uk"
 first_name: "Richard"
 last_name: "Bramley"
 is_admin: True
+---
+email: "daniel.brewer@uhl-tr.nhs.uk"
+first_name: "Daniel"
+last_name: "Brewer"
+is_admin: True
+---
+email: "Dawn.Woods@uhl-tr.nhs.uk"
+first_name: "Dawn"
+last_name: "Woods"
+is_admin: True
