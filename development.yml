@@ -30,7 +30,7 @@ services:
 
   mysql:
     restart: always
-    image: mysql:latest
+    image: mysql:5.7
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "True"
       MYSQL_DATABASE: ${GGPP_DB_NAME}
