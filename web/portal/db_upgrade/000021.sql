@@ -1,0 +1,1 @@
+INSERT IGNORE INTO role (name, description) VALUES ('admin', 'administrator');
