@@ -20,7 +20,3 @@ VALUES
     ('michelle.chalke@nihr.ac.uk'),
     ('daniel.brewer@uhl-tr.nhs.uk')
 ;
-
-REPLACE INTO role (name, description)
-VALUES ('admin', 'administrator')
-;
