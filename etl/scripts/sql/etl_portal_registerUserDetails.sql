@@ -92,7 +92,7 @@ WHERE NOT EXISTS (
 # they do not already exist
 
 INSERT INTO practice_registrations_users (user_id, practice_registration_id)
-SELECT
+SELECT DISTINCT
     u.id,
     pr.id
 FROM    etl_user e
