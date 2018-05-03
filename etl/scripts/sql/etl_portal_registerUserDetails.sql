@@ -25,6 +25,23 @@ WHERE	e.email_address NOT IN (
 # Delete roles for users that no longer exist
 
 DELETE ru
+FROM practice_registrations_users pru
+JOIN user u
+    ON u.id = pru.user_id
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM etl_user etlu
+    WHERE etlu.email_address = u.email
+) AND NOT EXISTS (
+    SELECT 1
+    FROM administrator a
+    WHERE a.email = u.email
+)
+;
+
+# Delete roles for users that no longer exist
+
+DELETE ru
 FROM roles_users ru
 JOIN user u
     ON u.id = ru.user_id
