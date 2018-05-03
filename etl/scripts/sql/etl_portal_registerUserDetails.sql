@@ -24,7 +24,7 @@ WHERE	e.email_address NOT IN (
 
 # Delete roles for users that no longer exist
 
-DELETE ru
+DELETE pru
 FROM practice_registrations_users pru
 JOIN user u
     ON u.id = pru.user_id
