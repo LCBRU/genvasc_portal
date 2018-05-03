@@ -98,11 +98,12 @@ SELECT
 FROM    etl_user e
 JOIN    user u ON u.email = e.email_address
 JOIN    practice_registration pr ON pr.code = e.practice_code
-LEFT JOIN practice_registrations_users pru
-    ON pru.user_id = u.id
-    AND pru.practice_registration_id = pr.id
-WHERE pru.user_id IS NULL
-    AND pru.practice_registration_id IS NULL
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM practice_registrations_users pru
+    WHERE pru.user_id = u.id
+        AND pru.practice_registration_id = pr.id
+)
 ;
 
 
