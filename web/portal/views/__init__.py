@@ -6,6 +6,5 @@ __all__ = [
     "recruits",
     "site_file_documentation",
     "submissions",
-    "users",
-    "federation"
+    "users"
 ]
