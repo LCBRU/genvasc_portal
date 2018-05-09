@@ -37,7 +37,7 @@ FROM (
             value,
             COALESCE(instance, 1) AS instance
         FROM redcap6170_briccsext.redcap_data
-        WHERE project_id = 53
+        WHERE project_id IN (53, 29)
             AND field_name IN (
                 'gv_contact',
                 'gv_role',
