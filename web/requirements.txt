@@ -4,7 +4,6 @@ Jinja2
 MarkupSafe
 SQLAlchemy
 Werkzeug
-gunicorn
 itsdangerous
 mysqlclient
 Flask-WTF
